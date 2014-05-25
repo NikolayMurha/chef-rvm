@@ -1,11 +1,17 @@
 include Chef::DSL::IncludeRecipe
-
-action :force_install do
-  rvm_install(true)
-end
+include Chef::Cookbook::RVM::Helpers
 
 action :install do
-  rvm_install
+  include_recipe 'rvm' #install packages
+  Chef::Log.info "Install RVM for user #{new_resource.user}"
+  execute "rvm:rvm:#{new_resource.user}" do
+    user new_resource.user
+    command '\curl -sSL https://get.rvm.io | bash -s stable --auto-dotfiles'
+    environment rvm_environment
+    action :run
+    not_if "bash -l -c \"type rvm | cat | head -1 | grep -q '^rvm is a function$'\"", :environment => rvm_environment
+  end
+  install_rvmvc
 end
 
 action :upgrade do
@@ -16,42 +22,25 @@ action :uninstall do
   puts 'Upgrade rvm!'
 end
 
-def install_rubies(force=false)
-  rubies = Array(new_resource.rubies)
-  if rubies.size > 0
-    rubies.each do |ruby|
-      r = rvm_ruby "#{new_resource.name}::#{ruby}" do
-        user new_resource.name
-        version ruby
-        action force ? :nothing : :install
-      end
-      r.run_action(:install) if force
-    end
-  end
-end
-
-def rvm_install(force=false)
-  include_recipe 'rvm'
-  Chef::Log.info "Install RVM for user #{new_resource.user}"
-
-  rvm = execute "Install user RVM for #{new_resource.user}" do
-    user new_resource.user
-    command '\curl -sSL https://get.rvm.io | bash -s stable && rvm requirements'
-    environment rvm_environment
-    action force ? :nothing : :run
-    not_if "bash -l -c \"type rvm | cat | head -1 | grep -q '^rvm is a function$\"", :environment => rvm_environment
-    notifies :remove, "sudo[#{new_resource.user}]"
+def install_rvmvc
+  if new_resource.system?
+    rvmrc_file = '/etc/rvmrc'
+    rvm_path = '/usr/local/rvm/'
+  else
+    rvmrc_file = "#{new_resource.user_home}/.rvmrc"
+    rvm_path = "#{new_resource.user_home}/.rvm"
   end
 
-  #add to sudo
-  sudo new_resource.user do
-    user      new_resource.user
-    nopasswd true
-    action force ? :nothing : :install
-    notifies :run, rvm
+  template rvmrc_file do
+    source 'rvmrc.erb'
+    owner new_resource.user
+    mode '0644'
+    variables  system_install: new_resource.system?,
+      rvmrc: new_resource.get_rvmrc.merge({
+        rvm_path: rvm_path
+      })
+    action :create
   end
-  sudo.run_action(:install) if force
-  new_resource.updated_by_last_action(rvm.updated_by_last_action?)
 end
 
 def rvm_environment

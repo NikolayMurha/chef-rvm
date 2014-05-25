@@ -5,11 +5,19 @@ class Chef
         def self.new(*args)
           klass = Class.new(::RVM::Shell::SingleShotWrapper) do
             alias_method :run_command_p, :run_command #oweridded in mixin
+            alias_method :run_p, :run #oweridded in mixin
             include(Chef::Mixin::Command)
 
             def initialize(user = nil, sh = 'bash -l', &setup_block)
               @user = user
               super(sh, &setup_block)
+            end
+
+            # Runs a given command in the current shell.
+            # Defaults the command to true if empty.
+            def run(command, *arguments)
+              Chef::Log.debug("Run command #{command} with #{arguments}")
+              run_p(command, *arguments)
             end
 
 
@@ -32,6 +40,7 @@ class Chef
             # If there isn't a current shell instance, it will create a new one.
             # In said scenario, it will also cleanup once it is done.
             def with_shell_instance(&blk)
+              Chef::Log.debug("#{self.class.name} with_shell_instance")
               no_current = @current.nil?
               if no_current
                 Chef::Log.debug("#{self.class.name} subprocess executing with environment of: [#{shell_params.inspect}].")

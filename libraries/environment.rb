@@ -1,6 +1,11 @@
 class Chef
   class Cookbook
     class RVM
+      module EnvironmentFactory
+        def env
+          @env ||= Chef::Cookbook::RVM::Environment.new(new_resource.user)
+        end
+      end
       class Environment
         def self.new(*args)
           klass = Class.new(::RVM::Environment) do
@@ -12,7 +17,7 @@ class Chef
               @user = user
               # explicitly set rvm_path if user is set
               if @user.nil?
-                config['rvm_path'] = @@root_rvm_path
+                config['rvm_path'] = @@root_rvm_path || '/usr/local/rvm'
               else
                 config['rvm_path'] = File.join(Etc.getpwnam(@user).dir, '.rvm')
               end
