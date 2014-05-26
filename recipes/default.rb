@@ -12,27 +12,16 @@ node['rvm']['packages'].each do |package_name|
   package package_name
 end
 
-# rvm 'ubuntu' do
-#   action :install
-# end
-
-# rvm_ruby 'ubuntu' do
-#    version '1.9.3@connect'
-#    action :install
-# end
-
-rvm_gemset '1.9.3@test' do
-   user 'ubuntu'
-   action :delete
+rvm 'ubuntu' do
+  rubies %w(1.9.3 2.1)
 end
 
-rvm_gemset '1.9.3@connect' do
+rvm_ruby 'ubuntu' do
+  version '1.9.3'
+  default true
+end
+
+rvm_gem 'unicorn' do
   user 'ubuntu'
-  action :delete
+  ruby_string '1.9.3@eye'
 end
-
-# rvm_gem 'eye' do
-#   user 'ubuntu'
-#   ruby_string '1.9.3@default'
-#   action :install
-# end

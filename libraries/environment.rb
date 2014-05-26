@@ -2,8 +2,15 @@ class Chef
   class Cookbook
     class RVM
       module EnvironmentFactory
+        def self.env(user)
+          #cache environment for user
+          @env ||={}
+          @env[user] ||= Chef::Cookbook::RVM::Environment.new(user)
+        end
+
         def env
           @env ||= Chef::Cookbook::RVM::Environment.new(new_resource.user)
+          #self.class.env(new_resource.user)
         end
       end
       class Environment

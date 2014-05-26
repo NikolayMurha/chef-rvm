@@ -7,7 +7,7 @@ class Chef
         end
 
         def _gemset
-          @_gemset ||= self.version.split('@')[1]
+          @_gemset ||= (self.version.split('@')[1] || 'default')
         end
       end
     end

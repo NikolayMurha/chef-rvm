@@ -4,13 +4,23 @@ include Chef::Cookbook::RVM::Helpers
 action :install do
   include_recipe 'rvm' #install packages
   Chef::Log.info "Install RVM for user #{new_resource.user}"
-  execute "rvm:rvm:#{new_resource.user}" do
+  check_command = "bash -l -c \"type rvm | cat | head -1 | grep -q '^rvm is a function$'\""
+  rvm = execute "rvm:rvm:#{new_resource.user}" do
     user new_resource.user
     command '\curl -sSL https://get.rvm.io | bash -s stable --auto-dotfiles'
     environment rvm_environment
     action :run
-    not_if "bash -l -c \"type rvm | cat | head -1 | grep -q '^rvm is a function$'\"", :environment => rvm_environment
+    not_if check_command, :environment => rvm_environment
   end
+
+  Array(new_resource.rubies).each do |rubie|
+    rvm_ruby new_resource.user do
+      version rubie
+      only_if check_command, :environment => rvm_environment
+      subscribes :install, rvm, :immediately
+    end
+  end
+
   install_rvmvc
 end
 

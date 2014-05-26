@@ -1,7 +1,8 @@
 
 actions :install, :uninstall, :upgrade
+default_action :install
 attribute :user, kind_of: [String, NilClass], name_attribute: true, default: 'root'
-attribute :rubies, kind_of: [String, Array, NilClass], :default => nil
+attribute :rubies, kind_of: [String, Array], :default => []
 attribute :rvmrc, kind_of: [Hash, NilClass], :default =>
 
 def system?
