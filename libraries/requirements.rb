@@ -6,6 +6,8 @@ class Chef
           pkgs = []
           case rubie
             when /^jruby/
+              return if Chef::Cookbook::RVM::Cache.get('jruby')
+              Chef::Cookbook::RVM::Cache.set('jruby', 1)
               begin
                 resource_collection.find("ruby_block[update-java-alternatives]").run_action(:create)
               rescue Chef::Exceptions::ResourceNotFound
@@ -20,6 +22,8 @@ class Chef
                   pkgs += %w{ g++ ant }
               end
             else # /^ruby-/, /^ree-/, /^rbx-/, /^kiji/
+              return if Chef::Cookbook::RVM::Cache.get('ruby')
+              Chef::Cookbook::RVM::Cache.set('ruby', 1)
               case node['platform']
                 when "debian", "ubuntu"
                   pkgs = %w{build-essential openssl libreadline6 libreadline6-dev
@@ -44,6 +48,7 @@ libxml2 libxml2-devel libxslt libxslt-devel }
                   pkgs += %w{ git subversion autoconf } if rubie =~ /^ruby-head$/
                 when 'gentoo'
                   pkgs = %w{ libiconv readline zlib openssl libyaml sqlite libxslt libtool gcc autoconf automake bison m4 }
+
               end
           end
 

@@ -14,10 +14,11 @@ action :install do
   end
 
   Array(new_resource.rubies).each do |rubie|
-    rvm_ruby new_resource.user do
+    rvm_ruby "#{new_resource.user}:#{rubie}" do
+      user new_resource.user
       version rubie
-      only_if check_command, :environment => rvm_environment
       subscribes :install, rvm, :immediately
+      only_if check_command, :environment => rvm_environment
     end
   end
 

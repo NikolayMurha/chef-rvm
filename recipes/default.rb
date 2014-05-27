@@ -16,12 +16,14 @@ rvm 'ubuntu' do
   rubies %w(1.9.3 2.1)
 end
 
-rvm_ruby 'ubuntu' do
+rvm_ruby 'ubuntu:1.9.3' do
+  user 'ubuntu'
   version '1.9.3'
   default true
 end
 
-rvm_gem 'unicorn' do
+rvm_gem 'ubuntu:1.9.3:eye:unicorn' do
+  gem('unicorn')
   user 'ubuntu'
   ruby_string '1.9.3@eye'
 end
