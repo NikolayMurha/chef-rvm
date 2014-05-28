@@ -8,11 +8,11 @@ class Chef
           @env[user] ||= Chef::Cookbook::RVM::Environment.new(user)
         end
 
-        def env
-          @env ||= Chef::Cookbook::RVM::Environment.new(new_resource.user)
-          #self.class.env(new_resource.user)
+        def env(user = nil)
+          @env ||= Chef::Cookbook::RVM::Environment.new(user || new_resource.user)
         end
       end
+
       class Environment
         def self.new(*args)
           klass = Class.new(::RVM::Environment) do

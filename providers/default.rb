@@ -12,7 +12,6 @@ action :install do
     action :run
     not_if check_command, :environment => rvm_environment
   end
-
   Array(new_resource.rubies).each do |rubie|
     rvm_ruby "#{new_resource.user}:#{rubie}" do
       user new_resource.user
@@ -21,16 +20,33 @@ action :install do
       only_if check_command, :environment => rvm_environment
     end
   end
-
   install_rvmvc
+  new_resource.updated_by_last_action(true)
 end
 
 action :upgrade do
-  puts 'Upgrade rvm!'
+  Chef::Log.info "Upgrade RVM for user #{new_resource.user}"
+  execute "rvm:rvm:#{new_resource.user}" do
+    user new_resource.user
+    command 'rvm get stable'
+    environment rvm_environment
+    action :run
+    #not_if check_command, :environment => rvm_environment
+  end
+  new_resource.updated_by_last_action(true)
 end
 
 action :uninstall do
-  puts 'Upgrade rvm!'
+  check_command = "bash -l -c \"type rvm | cat | head -1 | grep -q '^rvm is a function$'\""
+  Chef::Log.info "Upgrade RVM for user #{new_resource.user}"
+  execute "rvm:rvm:#{new_resource.user}" do
+    user new_resource.user
+    command 'rvm implode'
+    environment rvm_environment
+    action :run
+    only_if check_command, :environment => rvm_environment
+  end
+  new_resource.updated_by_last_action(true)
 end
 
 def install_rvmvc
@@ -43,6 +59,7 @@ def install_rvmvc
   end
 
   template rvmrc_file do
+    cookbook 'rvm'
     source 'rvmrc.erb'
     owner new_resource.user
     mode '0644'
