@@ -55,7 +55,7 @@ libxml2 libxml2-devel libxslt libxslt-devel }
           pkgs.each do |pkg|
             package pkg do
               action :install
-            end #.run_action(:install)
+            end
           end
         end
       end
