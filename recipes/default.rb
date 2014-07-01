@@ -15,7 +15,7 @@ end
 # rvm 'ubuntu' do
 #   rubies %w(1.9.3 2.1)
 # end
-#
+
 # rvm_ruby 'ubuntu:1.9.3' do
 #   user 'ubuntu'
 #   version '1.9.3'
