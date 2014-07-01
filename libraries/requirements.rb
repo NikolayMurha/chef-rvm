@@ -4,6 +4,7 @@ class Chef
       module Requirements
         def requirements_install(rubie)
           pkgs = []
+          Chef::Log.debug("Install ruby for version #{rubie}")
           case rubie
             when /^jruby/
               return if Chef::Cookbook::RVM::Cache.get('jruby')
@@ -51,7 +52,7 @@ libxml2 libxml2-devel libxslt libxslt-devel }
 
               end
           end
-          Chef::Log.debug("Install rvm ruby requirements #{pkgs} for rubie")
+          Chef::Log.debug("Install rvm ruby requirements #{pkgs} for #{rubie}")
           pkgs.each do |pkg|
             package pkg do
               action :install
