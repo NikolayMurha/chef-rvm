@@ -1,6 +1,7 @@
 include Chef::DSL::IncludeRecipe
 include Chef::Cookbook::RVM::Helpers
 include Chef::Mixin::ShellOut
+include Chef::Cookbook::RVM::Helpers::RubyString
 
 def whyrun_supported?
   true
@@ -19,9 +20,12 @@ action :install do
     not_if check_command, :environment => rvm_environment
   end
   Array(new_resource.rubies).each do |rubie|
-    rvm_ruby "#{new_resource.user}:#{rubie}" do
+    ruby_version = normalize_ruby_version(rubie)
+    rvm_ruby "#{new_resource.user}:#{ruby_version[:version]}" do
       user new_resource.user
-      version rubie
+      version ruby_version[:version]
+      default ruby_version[:default]
+      patch ruby_version[:patch]
     end
   end
   install_rvmvc
@@ -64,7 +68,7 @@ def install_rvmvc
     source 'rvmrc.erb'
     owner new_resource.user
     mode '0644'
-    variables  system_install: new_resource.system?,
+    variables system_install: new_resource.system?,
       rvmrc: new_resource.get_rvmrc.merge({
         rvm_path: rvm_path
       })
@@ -73,7 +77,7 @@ def install_rvmvc
 end
 
 def rvm_environment
-  env = { 'TERM' => 'dumb' }
+  env = {'TERM' => 'dumb'}
   env.merge(
     'USER' => new_resource.user,
     'HOME' => new_resource.user_home

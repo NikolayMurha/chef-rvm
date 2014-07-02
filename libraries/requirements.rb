@@ -55,8 +55,8 @@ libxml2 libxml2-devel libxslt libxslt-devel }
           Chef::Log.debug("Install rvm ruby requirements #{pkgs} for #{rubie}")
           pkgs.each do |pkg|
             package pkg do
-              action :install
-            end
+              action :nothing
+            end.run_action(:install)
           end
         end
       end
