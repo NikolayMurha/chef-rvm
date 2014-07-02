@@ -10,8 +10,8 @@ end
     Chef::Log.debug("#{action_name.to_s.capitalize} #{new_resource.gem} in #{new_resource.ruby_string} from user #{new_resource.user}")
     raise "Can't install gem #{new_resource.gem} because ruby #{new_resource._version} not installed!" unless env.use(new_resource._version)
     if new_resource._gemset
-      unless env.gemset_use(new_resource._gemset)
-        converge_by "Create gemset for #{new_resource.ruby_string}!" do
+      converge_by "Create gemset for #{new_resource.ruby_string}!" do
+        unless env.gemset_use(new_resource._gemset)
           env.gemset_create(new_resource._gemset)
         end
       end

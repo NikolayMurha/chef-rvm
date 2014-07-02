@@ -11,14 +11,23 @@ use_inline_resources
 
 action :install do
   include_recipe 'rvm'
-  Chef::Log.info "Install RVM for user #{new_resource.user}"
-  execute "rvm:rvm:#{new_resource.user}" do
-    user new_resource.user
-    command '\curl -sSL https://get.rvm.io | bash -s stable --auto-dotfiles'
-    environment rvm_environment
-    action :run
-    not_if check_command, :environment => rvm_environment
+  converge_by "Install RVM for user #{new_resource.user}" do
+    Chef::Log.info "Install RVM for user #{new_resource.user}"
+    downloader = remote_file "#{Chef::Config[:file_cache_path]}/rvm-installer.sh" do
+      source 'https://get.rvm.io'
+      not_if check_command, :environment => rvm_environment
+    end
+
+    execute "rvm:rvm:#{new_resource.user}" do
+      user new_resource.user
+      command "bash #{Chef::Config[:file_cache_path]}/rvm-installer.sh stable --auto-dotfiles"
+      environment rvm_environment
+      action :run
+      not_if check_command, :environment => rvm_environment
+      subscribes :run, downloader, :immediately
+    end
   end
+
   Array(new_resource.rubies).each do |rubie|
     ruby_version = normalize_ruby_version(rubie)
     rvm_ruby "#{new_resource.user}:#{ruby_version[:version]}" do

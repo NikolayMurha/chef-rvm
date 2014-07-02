@@ -10,8 +10,9 @@ def whyrun_supported?
 end
 action :install do
   requirements_install(new_resource._version)
-  unless check_and_set_default
-    converge_by "Install ruby #{new_resource._version} for user #{new_resource.user}" do
+
+  converge_by "Install ruby #{new_resource._version} for user #{new_resource.user}" do
+    unless check_and_set_default
       options = {}
       options[:patch] = new_resource.patch if new_resource.patch
       raise "Ruby #{new_resource._version} can't be installed" unless env.install(new_resource._version, options)
@@ -24,8 +25,8 @@ end
 [:remove, :uninstall].each do |action_name|
   action action_name do
     requirements_install(new_resource._version)
-    if env.use(new_resource._version)
-      converge_by "#{action_name.to_s.capitalize} ruby #{new_resource._version} for user #{new_resource.user}" do
+    converge_by "#{action_name.to_s.capitalize} ruby #{new_resource._version} for user #{new_resource.user}" do
+      if env.use(new_resource._version)
         new_resource.updated_by_last_action env.send(action_name, new_resource._version)
       end
     end

@@ -1,6 +1,6 @@
 default['rvm']['packages'] = value_for_platform(
-  #rhel: { default: %w{} },
-  #ubuntu: { default: %w{} },
+  # rhel: { default: %w{} },
+  # ubuntu: { default: %w{} },
   default: %w{bash tar curl gzip git subversion}
 )
 
@@ -19,7 +19,7 @@ default['rvm']['gems'] = {
     }
 }
 default['rvm']['wrappers'] = {}
-#RVM
+# RVM
 # default['rvm']['users'] = %w(ubuntu deploy)
 # default['rvm']['users'] = {
 #   ubuntu: ['1.9.3', '2.0.0']
@@ -48,7 +48,7 @@ default['rvm']['wrappers'] = {}
 # }
 
 
-#Rubies
+# Rubies
 # default['rvm']['rubies'] = {
 #   ubuntu: '1.9.3',
 #   deploy: '2.0'
@@ -78,8 +78,8 @@ default['rvm']['wrappers'] = {}
 # }
 # }
 
-#Wrappers
-#default['rvm']['wrappers'] = {
+# Wrappers
+# default['rvm']['wrappers'] = {
 #   ubuntu: [
 #     {
 #       :'1.9.3@gemset' => {
