@@ -34,7 +34,8 @@
 # Attributes
       # Options for .rvmrc
       node['rvm']['rvmrc'] = {
-        'rvm_gem_options' => '--no-rdoc --no-ri'
+        'rvm_gem_options' => '--no-rdoc --no-ri',
+        'rvm_autoupdate_flag' => 0
       }
       
       # User installations
