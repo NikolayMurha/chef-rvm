@@ -51,7 +51,7 @@ action :upgrade do
   end
 end
 
-action :uninstall do
+action :implode do
   check_command = "bash -l -c \"type rvm | cat | head -1 | grep -q '^rvm is a function$'\""
   Chef::Log.info "Upgrade RVM for user #{new_resource.user}"
   execute "rvm:rvm:#{new_resource.user}" do
@@ -78,15 +78,15 @@ def install_rvmvc
     owner new_resource.user
     mode '0644'
     variables system_install: new_resource.system?,
-      rvmrc: new_resource.get_rvmrc.merge({
-        rvm_path: rvm_path
-      })
+              rvmrc: new_resource.get_rvmrc.merge(
+                                            rvm_path: rvm_path
+                                          )
     action :create
   end
 end
 
 def rvm_environment
-  env = {'TERM' => 'dumb'}
+  env = { 'TERM' => 'dumb' }
   env.merge(
     'USER' => new_resource.user,
     'HOME' => new_resource.user_home

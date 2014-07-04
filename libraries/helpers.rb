@@ -2,8 +2,30 @@ class Chef
   class Cookbook
     class RVM
       module Helpers
+        module Receipe
+          def fetch_wrappers
+
+          end
+
+          def fetch_rubies
+            node['rvm'].each do |user, rvm|
+              yield(user, rvm['rubies'])
+            end
+          end
+
+          def fetch_users
+            node['rvm'] ? node['rvm'].keys : []
+          end
+
+          def fetch_gems
+            node['rvm'].each do |user, rvm|
+              yield(user, rvm['gems'])
+            end
+          end
+        end
+
         module RubyString
-          def self.normalize_ruby_version(ruby)
+          def normalize_ruby_version(ruby)
             version = {
               version: ruby,
               patch: nil,
@@ -16,25 +38,21 @@ class Chef
             end
             version
           end
-
-          def normalize_ruby_version(ruby)
-            self.class.normalize_ruby_version(ruby)
-          end
         end
 
         def _version
-          @_version ||= self.ruby_version.split('@')[0]
+          @_version ||= ruby_version.split('@')[0]
         end
 
         def _gemset
-          @_gemset ||= (self.ruby_version.split('@')[1] || 'default')
+          @_gemset ||= (ruby_version.split('@')[1] || 'default')
         end
 
         def ruby_version
           if self.respond_to?(:ruby_string)
-            self.ruby_string
+            ruby_string
           else
-            self.version
+            version
           end
         end
       end
@@ -42,3 +60,4 @@ class Chef
   end
 end
 
+::Chef::Recipe.send(:include, Chef::Cookbook::RVM::Helpers::Receipe)

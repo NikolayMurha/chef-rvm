@@ -4,8 +4,8 @@ class Chef
       class UserShellWrapper
         def self.new(*args)
           klass = Class.new(::RVM::Shell::SingleShotWrapper) do
-            alias_method :run_command_p, :run_command #oweridded in mixin
-            alias_method :run_p, :run #oweridded in mixin
+            alias_method :run_command_p, :run_command # oweridded in mixin
+            alias_method :run_p, :run # oweridded in mixin
             include(Chef::Mixin::Command)
 
             def initialize(user = nil, sh = 'bash -l', &setup_block)
@@ -20,7 +20,6 @@ class Chef
               run_p(command, *arguments)
             end
 
-
             # Runs a given command in the current shell.
             # Defaults the command to true if empty.
             def run_command(command)
@@ -34,17 +33,17 @@ class Chef
               super(command)
             end
 
-            protected
+                    protected
 
             # yields stdio, stderr and stdin for a shell instance.
             # If there isn't a current shell instance, it will create a new one.
             # In said scenario, it will also cleanup once it is done.
-            def with_shell_instance(&blk)
+            def with_shell_instance(&_blk)
               Chef::Log.debug("#{self.class.name} with_shell_instance")
               no_current = @current.nil?
               if no_current
                 Chef::Log.debug("#{self.class.name} subprocess executing with environment of: [#{shell_params.inspect}].")
-                @current = popen4(self.shell_executable, shell_params)
+                @current = popen4(shell_executable, shell_params)
                 invoke_setup!
               end
               yield
@@ -63,9 +62,17 @@ class Chef
               }
             end
 
-            def stdin; @current[1]; end
-            def stdout; @current[2]; end
-            def stderr; @current[3]; end
+            def stdin
+              @current[1]
+            end
+
+            def stdout
+              @current[2]
+            end
+
+            def stderr
+              @current[3]
+            end
           end
           klass.new(*args)
         end

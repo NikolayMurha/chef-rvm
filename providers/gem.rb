@@ -27,7 +27,7 @@ end
       next
     end
     converge_by "#{action_name.to_s.capitalize} gem #{new_resource.gem}" do
-      new_resource.updated_by_last_action env.run("gem #{action_name.to_s} #{new_resource.gem} #{version}").successful?
+      new_resource.updated_by_last_action env.run("gem #{action_name} #{new_resource.gem} #{version}").successful?
     end
   end
 end

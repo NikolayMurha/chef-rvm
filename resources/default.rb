@@ -1,5 +1,5 @@
 
-actions :install, :uninstall, :upgrade
+actions :install, :implode, :upgrade
 default_action :install
 attribute :user, kind_of: [String, NilClass], name_attribute: true, default: 'root'
 attribute :rubies, kind_of: [String, Array], :default => []
@@ -11,9 +11,9 @@ def system?
 end
 
 def user_home
-  Etc.getpwnam(self.user).dir
+  Etc.getpwnam(user).dir
 end
 
 def get_rvmrc
-  node['rvm']['rvmrc'].merge(self.rvmrc || {})
+  node['rvm']['rvmrc'].merge(rvmrc || {})
 end

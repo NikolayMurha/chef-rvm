@@ -70,14 +70,44 @@ Vagrant.configure("2") do |config|
   config.vm.provision :chef_solo do |chef|
     chef.log_level = :debug
     chef.json = {
-
+      rvm: {
+        users: {
+          ubuntu: {
+            rubies: {
+              '1.9.3' => {action: 'install', patch: 'falcon'},
+              '2.0' => 'install',
+            },
+            gems: {
+              '1.9.3@test' => %w(eye unicorn),
+              '1.9.3@test2' => [
+                {gem: 'eye', version: '0.6', action: 'install'},
+                'unicorn'
+              ],
+              '1.9.3@test3' => 'unicorn',
+            },
+            wrappers:
+              {
+                :'1.9.3@test' => {
+                  bootup: [
+                    {
+                      binary: 'eye',
+                      action: 'update'
+                    }
+                  ]
+                },
+                :'1.9.3@test2' => {
+                  bootup: %w(eye unicorn)
+                },
+                :'1.9.3@test3' => {
+                  bootup: 'unicorn'
+                }
+              }
+          }
+        }
+      }
     }
-
     chef.run_list = %w(
-      recipe[rvm::default]
-      recipe[rvm::rubies]
-      recipe[rvm::gems]
-      recipe[rvm::wrappers]
+      recipe[rvm]
     )
   end
 end

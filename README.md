@@ -3,24 +3,32 @@
 # Requirements
 
 
-# Usage
-
+# LWRP's
 
     rvm 'ubuntu' do
        action :install
     end
+    
+| Attributes    | Values           | 
+| ------------- |---------------| 
+| username      | right-aligned | 
+| action      | centered      |
 
-    rvm_ruby 'ubuntu' do
-        version '1.9.3@connect'
-        action :install
+    rvm_ruby '<Resource Name>' do
+      version '1.9.3'
+      patch 'falcon'
+      default true
+      action :install
     end
 
-    rvm_gemset '1.9.3@test' do
+    rvm_gemset '<Resource Name>' do
+       ruby_string '1.9.3@test'
        user 'ubuntu'
-       action :delete
+       action :create
     end
 
-    rvm_gem 'eye' do
+    rvm_gem '<Resource Name>' do
+        gem
        user 'ubuntu'
        ruby_string '1.9.3@test'
        action :install

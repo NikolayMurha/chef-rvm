@@ -1,19 +1,19 @@
 include Chef::DSL::IncludeRecipe
 include Chef::Cookbook::RVM::Requirements
 include Chef::Cookbook::RVM::EnvironmentFactory
-require 'chef/mixin/shell_out'
 
 use_inline_resources
 
 def whyrun_supported?
   true
 end
+
 action :install do
   requirements_install(new_resource._version)
 
   converge_by "Install ruby #{new_resource._version} for user #{new_resource.user}" do
     unless check_and_set_default
-      options = {}
+      options = {:rvm_by_path => true}
       options[:patch] = new_resource.patch if new_resource.patch
       raise "Ruby #{new_resource._version} can't be installed" unless env.install(new_resource._version, options)
       new_resource.updated_by_last_action true

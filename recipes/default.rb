@@ -6,14 +6,8 @@
 #
 # All rights reserved - Do Not Redistribute
 #
-chef_gem('rvm').run_action(:install)
-require 'rvm'
-node['rvm']['packages'].each do |package_name|
-  package package_name
-end
+include_recipe 'rvm::rvm'
+include_recipe 'rvm::rubies'
+include_recipe 'rvm::gems'
+include_recipe 'rvm::wrappers'
 
-node['rvm']['users'].each do |name, ruby|
-  rvm name do
-    rubies Array(ruby) if ruby
-  end
-end
