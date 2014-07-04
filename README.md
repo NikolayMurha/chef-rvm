@@ -1,9 +1,6 @@
-# rvm cookbook
+# Alternative Rvm Cookbook
 
-# Attributes
-
-
-
+[![Build Status](https://travis-ci.org/MurgaNikolay/chef-rvm.svg?branch=master)](https://travis-ci.org/MurgaNikolay/chef-rvm)
 
 # LWRP's
 
