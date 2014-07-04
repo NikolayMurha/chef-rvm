@@ -26,3 +26,7 @@ TrailingComma:
   Enabled: false
 WordArray:
   Enabled: false
+
+Style/CyclomaticComplexity:
+  Max: 15
+
