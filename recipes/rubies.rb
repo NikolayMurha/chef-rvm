@@ -8,9 +8,6 @@ node['rvm']['users'].each do |username, rvm_settings|
       resource_config['version']= version if version.is_a?(String)
       resource_config['action']= action if action.is_a?(String)
       resource_config.merge!(action) if action.is_a?(Hash)
-      puts '--------RUBY-----------'
-      puts resource_config
-      puts '-------------------'
       rvm_ruby "#{username}:#{resource_config['version']}" do
         user username
         version resource_config['version']

@@ -15,11 +15,6 @@ node['rvm']['users'].each do |username, rvm_settings|
       if gem_version.is_a?(String) && !gem_version.blank?
         resource_config.merge!({'version' => gem_version})
       end
-
-      puts '--------GEM-----------'
-      puts resource_config
-      puts '-------------------'
-
       rvm_gem "rvm:gem:#{username}:#{gemset}:#{resource_config['name']}" do
         ruby_string gemset
         user username

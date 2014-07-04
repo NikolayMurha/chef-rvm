@@ -7,13 +7,6 @@ node['rvm']['users'].each do |username, rvm|
           'binary' => binary
         }
         resource_config = binary if binary.is_a?(Hash)
-        puts '--------WRAPPER-----------'
-        puts username
-        puts gemset
-        puts scope
-        puts resource_config
-        puts '-------------------'
-
         rvm_wrapper "rvm:wrapper:#{username}:#{scope}:#{resource_config['binary']}" do
           user username
           ruby_string gemset
