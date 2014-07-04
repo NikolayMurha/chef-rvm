@@ -14,6 +14,6 @@ def user_home
   Etc.getpwnam(user).dir
 end
 
-def get_rvmrc
+def rvmrc_properties
   node['rvm']['rvmrc'].merge(rvmrc || {})
 end

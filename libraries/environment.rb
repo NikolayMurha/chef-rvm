@@ -18,13 +18,17 @@ class Chef
           klass = Class.new(::RVM::Environment) do
             attr_reader :user, :source_environment
 
+            class << self
+              attr_accessor :root_rvm_path
+            end
+
             def initialize(user = nil, environment_name = 'default', options = {})
               @source_environment = options.delete(:source_environment)
               @source_environment = true if @source_environment.nil?
               @user = user
               # explicitly set rvm_path if user is set
               if @user.nil?
-                config['rvm_path'] = @@root_rvm_path || '/usr/local/rvm'
+                config['rvm_path'] = self.class.root_rvm_path || '/usr/local/rvm'
               else
                 config['rvm_path'] = File.join(Etc.getpwnam(@user).dir, '.rvm')
               end
@@ -38,10 +42,6 @@ class Chef
                   use_rvm_environment
                 end
               end
-            end
-
-            def self.root_rvm_path=(path)
-              @@root_rvm_path = path
             end
           end
           klass.new(*args)

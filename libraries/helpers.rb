@@ -2,28 +2,6 @@ class Chef
   class Cookbook
     class RVM
       module Helpers
-        module Receipe
-          def fetch_wrappers
-
-          end
-
-          def fetch_rubies
-            node['rvm'].each do |user, rvm|
-              yield(user, rvm['rubies'])
-            end
-          end
-
-          def fetch_users
-            node['rvm'] ? node['rvm'].keys : []
-          end
-
-          def fetch_gems
-            node['rvm'].each do |user, rvm|
-              yield(user, rvm['gems'])
-            end
-          end
-        end
-
         module RubyString
           def normalize_ruby_version(ruby)
             version = {
@@ -59,5 +37,3 @@ class Chef
     end
   end
 end
-
-::Chef::Recipe.send(:include, Chef::Cookbook::RVM::Helpers::Receipe)

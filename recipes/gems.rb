@@ -7,14 +7,12 @@ node['rvm']['users'].each do |username, rvm_settings|
       if gem_name.is_a?(Hash)
         resource_config = gem_name
       else
-        resource_config = {'gem' => gem_name}
+        resource_config = { 'gem' => gem_name }
       end
-      if gem_version.is_a?(Hash)
-        resource_config.merge!(gem_version)
-      end
-      if gem_version.is_a?(String) && !gem_version.blank?
-        resource_config.merge!({'version' => gem_version})
-      end
+
+      resource_config.merge!(gem_version) if gem_version.is_a?(Hash)
+      resource_config.merge!('version' => gem_version) if gem_version.is_a?(String) && !gem_version.blank?
+
       rvm_gem "rvm:gem:#{username}:#{gemset}:#{resource_config['name']}" do
         ruby_string gemset
         user username

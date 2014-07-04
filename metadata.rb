@@ -1,9 +1,9 @@
 name 'rvm'
 maintainer 'R&R Innovation LLC'
-maintainer_email 'cookbooks@randrmusic.com'
+maintainer_email 'work at murga.kiev.ua'
 license 'All rights reserved'
 description 'Installs/Configures rvm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '0.3.0'
+version '0.3.1'
 
 depends 'sudo'

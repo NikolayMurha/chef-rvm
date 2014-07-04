@@ -78,7 +78,7 @@ def install_rvmvc
     owner new_resource.user
     mode '0644'
     variables system_install: new_resource.system?,
-              rvmrc: new_resource.get_rvmrc.merge(
+              rvmrc: new_resource.rvmrc_properties.merge(
                                             rvm_path: rvm_path
                                           )
     action :create
