@@ -4,10 +4,10 @@ use_inline_resources
 def whyrun_supported?
   true
 end
+
 [:create, :delete, :update, :pristine, :prune].each do |action_name|
   action action_name do
-    raise "Cant #{action_name} for gemset #{new_resource._gemset} because ruby #{new_resource._version} is not installed by user #{new_resource.user}" if action_name != :create && env.use(new_resource._version)
-
+    raise "Can't #{action_name} gemset #{new_resource._gemset} because ruby #{new_resource._version} is not installed for user #{new_resource.user}" unless env.use(new_resource._version)
     if action_name == :create && env.gemset_list.include?(new_resource._gemset)
       Chef::Log.debug("Skip action #{action_name} for gemset #{new_resource._gemset} because gemset exist")
       next
