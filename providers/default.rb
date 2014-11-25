@@ -11,7 +11,14 @@ use_inline_resources
 
 action :install do
   include_recipe 'rvm'
+
   converge_by "Install RVM for user #{new_resource.user}" do
+    bsw_gpg_load_key_from_key_server 'rvm_key' do
+      key_server 'keys.gnupg.net'
+      key_id 'D39DC0E3'
+      for_user new_resource.user
+    end
+
     Chef::Log.info "Install RVM for user #{new_resource.user}"
     downloader = remote_file "#{Chef::Config[:file_cache_path]}/rvm-installer.sh" do
       source 'https://get.rvm.io'
