@@ -5,3 +5,4 @@ node['rvm']['users'].each do |name, options|
     action options['action'] if options
   end
 end if node['rvm']
+
