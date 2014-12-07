@@ -4,7 +4,7 @@ maintainer_email 'work at murga.kiev.ua'
 license 'All rights reserved'
 description 'Installs/Configures rvm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '0.3.6'
+version '0.4.0'
 
 depends 'sudo'
 depends 'bsw_gpg'
