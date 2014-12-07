@@ -5,28 +5,26 @@ class RvmCookbook
     attr_reader :ruby_string, :opts
 
     def initialize(*args)
-      if args.last.is_a?(Hash)
-        @opts = args.pop
-      end
+      @opts = args.pop if args.last.is_a?(Hash)
       @user = args.shift
       @ruby_string = args.shift
       @opts = opts
     end
 
     def shell_out_args(*args)
-      _options = args.last.is_a?(Hash) ? params(args.pop) : nil
+      options = args.last.is_a?(Hash) ? params(args.pop) : nil
       commands = args.map { |cmd| command(cmd) }
-      commands.push(_options) if _options
+      commands.push(options) if options
       commands
     end
 
     def command(cmd)
       return cmd unless @ruby_string
-      cmd = cmd.split(' && ').map do |_cmd|
-        if _cmd[0..2] == 'cd '
-          _cmd
+      cmd = cmd.split(' && ').map do |cmd_part|
+        if cmd_part[0..2] == 'cd '
+          cmd_part
         else
-          "rvm #{@ruby_string} do #{_cmd}"
+          "rvm #{@ruby_string} do #{cmd_part}"
         end
       end.unshift("source #{rvm_path}/scripts/rvm").join(' && ').strip
       "bash -c \"#{cmd.gsub('"', '\"')}\""
@@ -37,7 +35,7 @@ class RvmCookbook
       merge(shell_params, options).symbolize_keys
     end
 
-    def method_missing(name, *args)
+    def method_missing(name)
       params[name]
     end
 
