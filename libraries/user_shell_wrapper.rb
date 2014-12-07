@@ -32,7 +32,8 @@ class RvmCookbook
           super(command)
         end
 
-        protected
+                protected
+
         # yields stdio, stderr and stdin for a shell instance.
         # If there isn't a current shell instance, it will create a new one.
         # In said scenario, it will also cleanup once it is done.
@@ -65,4 +66,3 @@ class RvmCookbook
     end
   end
 end
-

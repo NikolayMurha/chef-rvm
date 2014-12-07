@@ -4,15 +4,13 @@ class RvmCookbook
       set_or_return(
         :ruby_string,
         arg,
-        :kind_of => [ String ]
+        :kind_of => [String]
       )
     end
 
-    def self.set_guard_inherited_attributes(*inherited_attributes)
-      @class_inherited_attributes = inherited_attributes
-    end
-
     def self.guard_inherited_attributes(*inherited_attributes)
+      @class_inherited_attributes = inherited_attributes if inherited_attributes
+
       ancestor_attributes = []
       if superclass.respond_to?(:guard_inherited_attributes)
         ancestor_attributes = superclass.guard_inherited_attributes
