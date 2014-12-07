@@ -1,31 +1,29 @@
-class Chef
-  class Cookbook
-    class RVM
-      module Requirements
-        def requirements_install(rubie)
-          pkgs = []
-          Chef::Log.debug("Install ruby for version #{rubie}")
-          case rubie
-          when /^jruby/
-            return if Chef::Cookbook::RVM::Cache.get('jruby')
-            Chef::Cookbook::RVM::Cache.set('jruby', 1)
-            begin
-              resource_collection.find('ruby_block[update-java-alternatives]').run_action(:create)
-            rescue Chef::Exceptions::ResourceNotFound
-              Chef::Log.debug('Java cookbook not loaded or not on ubuntu/debian, so skipping')
-            end
+class RvmCookbook
+  module Requirements
+    def requirements_install(rubie)
+      pkgs = []
+      Chef::Log.debug("Install ruby for version #{rubie}")
+      case rubie
+        when /^jruby/
+          return if RvmCookbook::Cache.get('jruby')
+          RvmCookbook::Cache.set('jruby', 1)
+          begin
+            resource_collection.find('ruby_block[update-java-alternatives]').run_action(:create)
+          rescue Chef::Exceptions::ResourceNotFound
+            Chef::Log.debug('Java cookbook not loaded or not on ubuntu/debian, so skipping')
+          end
 
-            # TODO: need to figure out how to pull in java recipe only when needed. For
-            # now, users of jruby will have to add the "java" recipe to their run_list.
-            # include_recipe "java"
-            case node['platform']
+          # TODO: need to figure out how to pull in java recipe only when needed. For
+          # now, users of jruby will have to add the "java" recipe to their run_list.
+          # include_recipe "java"
+          case node['platform']
             when 'debian', 'ubuntu'
               pkgs += %w(g++ ant)
-            end
-          else # /^ruby-/, /^ree-/, /^rbx-/, /^kiji/
-            return if Chef::Cookbook::RVM::Cache.get('ruby')
-            Chef::Cookbook::RVM::Cache.set('ruby', 1)
-            case node['platform']
+          end
+        else # /^ruby-/, /^ree-/, /^rbx-/, /^kiji/
+          return if RvmCookbook::Cache.get('ruby')
+          RvmCookbook::Cache.set('ruby', 1)
+          case node['platform']
             when 'debian', 'ubuntu'
               pkgs = %w(build-essential openssl libreadline6 libreadline6-dev
                         zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev
@@ -50,16 +48,15 @@ class Chef
             when 'gentoo'
               pkgs = %w(libiconv readline zlib openssl libyaml sqlite libxslt libtool gcc autoconf automake bison m4)
 
-            end
           end
-          Chef::Log.debug("Install rvm ruby requirements #{pkgs} for #{rubie}")
-          pkgs.each do |pkg|
-            package pkg do
-              action :nothing
-            end.run_action(:install)
-          end
-        end
+      end
+      Chef::Log.debug("Install rvm ruby requirements #{pkgs} for #{rubie}")
+      pkgs.each do |pkg|
+        package pkg do
+          action :nothing
+        end.run_action(:install)
       end
     end
   end
 end
+

@@ -1,4 +1,4 @@
-include Chef::Cookbook::RVM::EnvironmentFactory
+include RvmCookbook::EnvironmentFactory
 use_inline_resources
 
 def whyrun_supported?

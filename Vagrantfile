@@ -9,8 +9,8 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "rvm-berkshelf"
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = 'spantree/ubuntu-precise-64'
-
+  config.vm.box = 'chef/ubuntu-14.04'
+  config.omnibus.chef_version = :latest
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
   # config.vm.box_url = "https://dl.dropbox.com/u/31081437/Berkshelf-CentOS-6.3-x86_64-minimal.box"
@@ -53,7 +53,7 @@ Vagrant.configure("2") do |config|
   # information on available options.
 
   # The path to the Berksfile to use with Vagrant Berkshelf
-  # config.berkshelf.berksfile_path = "./Berksfile"
+  config.berkshelf.berksfile_path = "./Berksfile"
 
   # Enabling the Berkshelf plugin. To enable this globally, add this configuration
   # option to your ~/.vagrant.d/Vagrantfile file
@@ -70,44 +70,10 @@ Vagrant.configure("2") do |config|
   config.vm.provision :chef_solo do |chef|
     chef.log_level = :debug
     chef.json = {
-      rvm: {
-        users: {
-          ubuntu: {
-            rubies: {
-              '1.9.3' => {action: 'install', patch: 'falcon'},
-              '2.0' => 'install',
-            },
-            gems: {
-              '1.9.3@test' => %w(eye unicorn),
-              '1.9.3@test2' => [
-                {gem: 'eye', version: '0.6', action: 'install'},
-                'unicorn'
-              ],
-              '1.9.3@test3' => 'unicorn',
-            },
-            wrappers:
-              {
-                :'1.9.3@test' => {
-                  bootup: [
-                    {
-                      binary: 'eye',
-                      action: 'update'
-                    }
-                  ]
-                },
-                :'1.9.3@test2' => {
-                  bootup: %w(eye unicorn)
-                },
-                :'1.9.3@test3' => {
-                  bootup: 'unicorn'
-                }
-              }
-          }
-        }
-      }
+
     }
     chef.run_list = %w(
-      recipe[rvm]
+      recipe[rvm::test]
     )
   end
 end

@@ -1,7 +1,7 @@
 include Chef::DSL::IncludeRecipe
-include Chef::Cookbook::RVM::Helpers
+include RvmCookbook::Helpers
 include Chef::Mixin::ShellOut
-include Chef::Cookbook::RVM::Helpers::RubyString
+include RvmCookbook::Helpers::RubyString
 
 def whyrun_supported?
   true

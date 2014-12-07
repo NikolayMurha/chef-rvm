@@ -1,4 +1,4 @@
-include Chef::Cookbook::RVM::Helpers
+include RvmCookbook::Helpers
 
 actions :create, :delete, :update, :pristine, :prune
 default_action :create

@@ -1,4 +1,4 @@
-include Chef::Cookbook::RVM::Helpers
+include RvmCookbook::Helpers
 
 actions :install, :remove, :uninstall
 default_action :install

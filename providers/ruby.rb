@@ -1,6 +1,6 @@
 include Chef::DSL::IncludeRecipe
-include Chef::Cookbook::RVM::Requirements
-include Chef::Cookbook::RVM::EnvironmentFactory
+include RvmCookbook::Requirements
+include RvmCookbook::EnvironmentFactory
 
 use_inline_resources
 
