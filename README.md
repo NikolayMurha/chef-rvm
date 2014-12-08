@@ -1,4 +1,6 @@
-# Alternative Rvm Cookbook
+# Alternative LWRP's based rvm cookbook
+### Inspired by [RVM](http://fnichol.github.com/chef-rvm/) cookbook y [fnichol](https://github.com/fnichol)
+
 
 [![Build Status](https://travis-ci.org/MurgaNikolay/chef-rvm.svg?branch=master)](https://travis-ci.org/MurgaNikolay/chef-rvm)
 
