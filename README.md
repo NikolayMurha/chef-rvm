@@ -1,29 +1,29 @@
 # Alternative LWRP's based rvm cookbook
-### Inspired by [RVM](http://fnichol.github.com/chef-rvm/) cookbook y [fnichol](https://github.com/fnichol)
+### Inspired by [RVM](http://fnichol.github.com/chef-rvm/) cookbook by [fnichol](https://github.com/fnichol)
 
 
 [![Build Status](https://travis-ci.org/MurgaNikolay/chef-rvm.svg?branch=master)](https://travis-ci.org/MurgaNikolay/chef-rvm)
 
 # LWRP's
 
-    rvm 'ubuntu' do
+    ruby_rvm 'ubuntu' do
        action :install
     end
 
-    rvm_ruby 'ubuntu:ruby:1.9.3' do
+    ruby_rvm_ruby 'ubuntu:ruby:1.9.3' do
       version '1.9.3'
       patch 'falcon'
       default true
       action :install
     end
 
-    rvm_gemset 'ubuntu:gemset:1.9.3:test' do
+    ruby_rvm_gemset 'ubuntu:gemset:1.9.3:test' do
        ruby_string '1.9.3@test'
        user 'ubuntu'
        action :create
     end
 
-    rvm_gem 'ubuntu:unicorn' do
+    ruby_rvm_gem 'ubuntu:unicorn' do
        gem 'unicorn'
        user 'ubuntu'
        ruby_string '1.9.3@test'
@@ -36,7 +36,7 @@ Execute scripts in rvm environment.
 All resources worked like native resources but guards inherit environment from resource by default.
 
 
-    rvm_execute 'bundle install' do
+    ruby_rvm_execute 'bundle install' do
       ruby_string '2.0.0'
       user 'ubuntu'
       cwd '/home/ubuntu/test'
@@ -45,7 +45,7 @@ All resources worked like native resources but guards inherit environment from r
       action :run
     end
 
-    rvm_script 'bundle_install_sh' do
+    ruby_rvm_script 'bundle_install_sh' do
       interpreter 'sh'
       ruby_string '2.0.0'
       user 'ubuntu'
@@ -57,7 +57,7 @@ All resources worked like native resources but guards inherit environment from r
       action :run
     end
 
-    rvm_bash 'bundle_install' do
+    ruby_rvm_bash 'bundle_install' do
        ruby_string '2.0.0'
        user 'ubuntu'
        cwd '/home/ubuntu/test'
@@ -116,12 +116,12 @@ All resources worked like native resources but guards inherit environment from r
 
 # Recipes
 
-    recipe[rvm::default] # Full installations
-    recipe[rvm::packages] # Required packages
-    recipe[rvm::rvm]
-    recipe[rvm::rubies]
-    recipe[rvm::gems]
-    recipe[rvm::wrappers]
+    recipe[ruby_rvm::default] # Full installations
+    recipe[ruby_rvm::packages] # Required packages
+    recipe[ruby_rvm::rvm]
+    recipe[ruby_rvm::rubies]
+    recipe[ruby_rvm::gems]
+    recipe[ruby_rvm::wrappers]
 
 # Author
 

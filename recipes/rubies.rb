@@ -1,4 +1,4 @@
-include_recipe 'rvm::packages'
+include_recipe 'ruby_rvm::packages'
 node['rvm']['users'].each do |username, rvm_settings|
   next if rvm_settings['rubies']
   rubies = rvm_settings['rubies']
@@ -8,7 +8,7 @@ node['rvm']['users'].each do |username, rvm_settings|
     resource_config['version'] = version if version.is_a?(String)
     resource_config['action'] = action if action.is_a?(String)
     resource_config.merge!(action) if action.is_a?(Hash)
-    rvm_ruby "#{username}:#{resource_config['version']}" do
+    ruby_rvm_ruby "#{username}:#{resource_config['version']}" do
       user username
       version resource_config['version']
       default resource_config['default']

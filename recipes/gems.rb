@@ -1,4 +1,4 @@
-include_recipe 'rvm::packages'
+include_recipe 'ruby_rvm::packages'
 
 node['rvm']['users'].each do |username, rvm_settings|
   rvm_settings['gems'].each do |gemset, gems|
@@ -13,7 +13,7 @@ node['rvm']['users'].each do |username, rvm_settings|
       resource_config.merge!(gem_version) if gem_version.is_a?(Hash)
       resource_config.merge!('version' => gem_version) if gem_version.is_a?(String) && !gem_version.blank?
 
-      rvm_gem "rvm:gem:#{username}:#{gemset}:#{resource_config['name']}" do
+      ruby_rvm_gem "rvm:gem:#{username}:#{gemset}:#{resource_config['name']}" do
         ruby_string gemset
         user username
         gem resource_config['gem']

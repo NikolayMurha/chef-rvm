@@ -10,7 +10,7 @@ end
 use_inline_resources
 
 action :install do
-  include_recipe 'rvm'
+  include_recipe 'ruby_rvm'
 
   converge_by "Install RVM for user #{new_resource.user}" do
     bsw_gpg_load_key_from_key_server 'rvm_key' do
@@ -37,7 +37,7 @@ action :install do
 
   Array(new_resource.rubies).each do |rubie|
     ruby_version = normalize_ruby_version(rubie)
-    rvm_ruby "#{new_resource.user}:#{ruby_version[:version]}" do
+    ruby_rvm_ruby "#{new_resource.user}:#{ruby_version[:version]}" do
       user new_resource.user
       version ruby_version[:version]
       default ruby_version[:default]
@@ -80,7 +80,7 @@ def install_rvmvc
   end
 
   template rvmrc_file do
-    cookbook 'rvm'
+    cookbook 'ruby_rvm'
     source 'rvmrc.erb'
     owner new_resource.user
     mode '0644'

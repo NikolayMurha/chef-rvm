@@ -1,4 +1,4 @@
-include_recipe 'rvm::rvm'
-include_recipe 'rvm::rubies'
-include_recipe 'rvm::gems'
-include_recipe 'rvm::wrappers'
+include_recipe 'ruby_rvm::rvm'
+include_recipe 'ruby_rvm::rubies'
+include_recipe 'ruby_rvm::gems'
+include_recipe 'ruby_rvm::wrappers'

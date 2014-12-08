@@ -18,5 +18,5 @@ provisioner:
 suites:
 - name: default
   run_list:
-    - "recipe[rvm::default]"
+    - "recipe[ruby_rvm::default]"
   attributes:

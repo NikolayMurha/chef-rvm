@@ -1,6 +1,6 @@
 class Chef
   class Provider
-    class RvmScript < Chef::Provider::Script
+    class RubyRvmScript < Chef::Provider::Script
       include ::RvmCookbook::ExecuteProviderMixin
     end
   end

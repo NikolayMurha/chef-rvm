@@ -1,4 +1,4 @@
-include_recipe 'rvm::packages'
+include_recipe 'ruby_rvm::packages'
 
 node['rvm']['users'].each do |name, options|
   rvm name do
