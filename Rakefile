@@ -1,6 +1,9 @@
 #!/usr/bin/env rake
 
 # Style tests. Rubocop and Foodcritic
+require 'stove/rake_task'
+Stove::RakeTask.new
+
 namespace :style do
   begin
     require 'rubocop/rake_task'
