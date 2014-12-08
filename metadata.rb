@@ -14,6 +14,7 @@ recipe 'ruby_rvm::packages', 'General recipe. Installs dependencies for other re
 recipe 'ruby_rvm::wrappers', 'Create wrappers'
 
 depends 'sudo'
+depends 'apt'
 depends 'bsw_gpg'
 depends 'chef_gem'
 
