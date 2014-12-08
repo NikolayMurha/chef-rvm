@@ -3,6 +3,7 @@ class Chef
   class Resource
     class RubyRvmExecute < Chef::Resource::Execute
       include ::RvmCookbook::ExecuteResourceMixin
+      extend ::RvmCookbook::ExecuteResourceMixin::ClassMethod
       def initialize(name, run_context = nil)
         super
         @resource_name = :ruby_rvm_execute

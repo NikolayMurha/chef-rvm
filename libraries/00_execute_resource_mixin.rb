@@ -8,14 +8,16 @@ class RvmCookbook
       )
     end
 
-    def self.guard_inherited_attributes(*inherited_attributes)
-      @class_inherited_attributes = inherited_attributes if inherited_attributes
+    module ClassMethod
+      def guard_inherited_attributes(*inherited_attributes)
+        @class_inherited_attributes = inherited_attributes if inherited_attributes
 
-      ancestor_attributes = []
-      if superclass.respond_to?(:guard_inherited_attributes)
-        ancestor_attributes = superclass.guard_inherited_attributes
+        ancestor_attributes = []
+        if superclass.respond_to?(:guard_inherited_attributes)
+          ancestor_attributes = superclass.guard_inherited_attributes
+        end
+        ancestor_attributes.concat(@class_inherited_attributes ? @class_inherited_attributes : []).uniq
       end
-      ancestor_attributes.concat(@class_inherited_attributes ? @class_inherited_attributes : []).uniq
     end
   end
 end

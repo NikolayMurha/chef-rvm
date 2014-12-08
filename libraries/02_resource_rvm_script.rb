@@ -2,6 +2,7 @@ class Chef
   class Resource
     class RubyRvmScript < Chef::Resource::Script
       include ::RvmCookbook::ExecuteResourceMixin
+      extend ::RvmCookbook::ExecuteResourceMixin::ClassMethod
       def initialize(name, run_context = nil)
         super
         @resource_name = :ruby_rvm_script
