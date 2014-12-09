@@ -6,7 +6,7 @@ description 'Installs/Configures rvm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 # source_url 'https://github.com/MurgaNikolay/chef-rvm'
 # issues_url 'https://github.com/MurgaNikolay/chef-rvm/issues'
-version '0.4.4'
+version '0.4.5'
 
 recipe 'ruby_rvm',  'Installs all'
 recipe 'ruby_rvm::rvm',  'Installs the rvm for users'
