@@ -3,7 +3,6 @@ class Chef
   class Resource
     class RubyRvmExecute < Chef::Resource::Execute
       include ::RvmCookbook::ExecuteResourceMixin
-      extend ::RvmCookbook::ExecuteResourceMixin::ClassMethod
       def initialize(name, run_context = nil)
         super
         @resource_name = :ruby_rvm_execute
@@ -11,7 +10,7 @@ class Chef
         @guard_interpreter = :ruby_rvm_execute
       end
 
-      guard_inherited_attributes(
+      set_guard_inherited_attributes(
         :cwd,
         :environment,
         :group,

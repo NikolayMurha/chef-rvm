@@ -41,13 +41,14 @@ class RvmCookbook
   end
 
   class Environment
+    class << self
+      attr_accessor :root_rvm_path
+    end
+
     def self.new(*args)
       klass = Class.new(::RVM::Environment) do
         attr_reader :user, :source_environment
         include EnvironmentMixin
-        class << self
-          attr_accessor :root_rvm_path
-        end
 
         def initialize(user = nil, environment_name = 'default', options = {})
           @source_environment = options.delete(:source_environment)

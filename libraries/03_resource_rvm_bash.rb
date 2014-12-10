@@ -8,7 +8,7 @@ class Chef
         @guard_interpreter = :ruby_rvm_bash
       end
 
-      guard_inherited_attributes(
+      set_guard_inherited_attributes(
         :cwd,
         :environment,
         :group,

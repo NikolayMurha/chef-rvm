@@ -2,7 +2,6 @@ class Chef
   class Resource
     class RubyRvmScript < Chef::Resource::Script
       include ::RvmCookbook::ExecuteResourceMixin
-      extend ::RvmCookbook::ExecuteResourceMixin::ClassMethod
       def initialize(name, run_context = nil)
         super
         @resource_name = :ruby_rvm_script
@@ -10,7 +9,7 @@ class Chef
         @guard_interpreter = :ruby_rvm_script
       end
 
-      guard_inherited_attributes(
+      set_guard_inherited_attributes(
         :cwd,
         :environment,
         :group,
