@@ -1,6 +1,6 @@
 class RvmCookbook
   module ExecuteResourceMixin
-    module ClassMethod
+    module ClassMethods
       def set_guard_inherited_attributes(*inherited_attributes)
         @class_inherited_attributes = inherited_attributes
       end
@@ -16,14 +16,18 @@ class RvmCookbook
         ancestor_attributes.concat(@class_inherited_attributes ? @class_inherited_attributes : []).uniq
       end
     end
-    extend ClassMethod
-
-    def ruby_string(arg = nil)
-      set_or_return(
-        :ruby_string,
-        arg,
-        :kind_of => [String]
-      )
+    module InstanceMethods
+      def ruby_string(arg = nil)
+        set_or_return(
+          :ruby_string,
+          arg,
+          :kind_of => [String]
+        )
+      end
+    end
+    def self.included(receiver)
+      receiver.extend(ClassMethods)
+      receiver.send(:include, InstanceMethods)
     end
   end
 end
