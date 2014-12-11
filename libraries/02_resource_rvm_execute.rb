@@ -7,7 +7,7 @@ class Chef
         super
         @resource_name = :ruby_rvm_execute
         @ruby_string = 'system'
-        @guard_interpreter = :ruby_rvm_execute
+        @guard_interpreter = :ruby_rvm_bash
       end
 
       set_guard_inherited_attributes(
