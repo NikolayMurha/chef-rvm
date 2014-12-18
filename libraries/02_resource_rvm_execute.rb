@@ -6,7 +6,7 @@ class Chef
 
       def initialize(name, run_context = nil)
         if Gem::Version.new(Chef::VERSION) < Gem::Version.new(::RvmCookbook::MIN_SUPPORTED_VERSION)
-          raise "Resource 'ruby_rvm_execute' is not supported by the Chef Client #{Chef::VERSION}"
+          raise "Resource 'ruby_rvm_execute' is not supported by the Chef Client #{Chef::VERSION}. Please upgrade Chef Client to #{::RvmCookbook::MIN_SUPPORTED_VERSION} or higher."
         end
         super
         @resource_name = :ruby_rvm_execute
