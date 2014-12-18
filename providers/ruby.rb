@@ -10,7 +10,6 @@ end
 
 action :install do
   requirements_install(new_resource._version)
-
   converge_by "Install ruby #{new_resource._version} for user #{new_resource.user}" do
     unless check_and_set_default
       options = { :rvm_by_path => true }

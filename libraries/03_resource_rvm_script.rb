@@ -13,7 +13,6 @@ class Chef
         :cwd,
         :environment,
         :group,
-        :path,
         :user,
         :umask,
         :ruby_string,

@@ -1,7 +1,8 @@
 include Chef::DSL::IncludeRecipe
 include RvmCookbook::Helpers
-include Chef::Mixin::ShellOut
 include RvmCookbook::Helpers::RubyString
+include Chef::Mixin::ShellOut
+
 
 def whyrun_supported?
   true
@@ -59,7 +60,6 @@ action :upgrade do
 end
 
 action :implode do
-  check_command = "bash -l -c \"type rvm | cat | head -1 | grep -q '^rvm is a function$'\""
   Chef::Log.info "Upgrade RVM for user #{new_resource.user}"
   execute "rvm:rvm:#{new_resource.user}" do
     user new_resource.user

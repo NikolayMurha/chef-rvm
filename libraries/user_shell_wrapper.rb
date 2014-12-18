@@ -16,19 +16,23 @@ class RvmCookbook
         # Defaults the command to true if empty.
         def run(command, *arguments)
           Chef::Log.debug("Run command #{command} with #{arguments}")
-          run_p(command, *arguments)
+          result = run_p(command, *arguments)
+          unless result.successful?
+            Chef::Log.error("STDIN: #{result.stdin}")
+            Chef::Log.error("STDERR: #{result.stderr}")
+          end
         end
 
         # Runs a given command in the current shell.
         # Defaults the command to true if empty.
         def run_command(command)
-          Chef::Log.debug("#{self.class.name} executing: [#{wrapped_command(command)}]")
+          Chef::Log.debug("executing: [#{wrapped_command(command)}]")
           run_command_p(command)
         end
 
         # Runs a command, ensuring no output is collected.
         def run_command_silently(command)
-          Chef::Log.debug("#{self.class.name} silently executing: [#{wrapped_command(command)}]")
+          Chef::Log.debug("silently executing: [#{wrapped_command(command)}]")
           super(command)
         end
 
@@ -38,10 +42,9 @@ class RvmCookbook
         # If there isn't a current shell instance, it will create a new one.
         # In said scenario, it will also cleanup once it is done.
         def with_shell_instance(&_blk)
-          Chef::Log.debug("#{self.class.name} with_shell_instance")
           no_current = @current.nil?
           if no_current
-            Chef::Log.debug("#{self.class.name} subprocess executing with environment of: [#{shell_params.inspect}].")
+            Chef::Log.debug("subprocess executing with environment of: [#{shell_params.inspect}].")
             @current = popen4(shell_executable, shell_params)
             invoke_setup!
           end
