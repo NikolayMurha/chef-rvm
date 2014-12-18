@@ -7,7 +7,14 @@ class Chef
         super
         @resource_name = :ruby_rvm_execute
         @ruby_string = 'system'
-        @guard_interpreter = :ruby_rvm_bash
+        # In chef >= 11.12.0 'execute' resource can not be as guard_interpreter
+        # Only 'script' resource or 'script' resource successors.
+        @guard_interpreter =
+          # Chef 12 can use execute resources as guard_interpreter
+          if Chef::Resource::Execute.respond_to?(:set_guard_inherited_attributes)
+            :ruby_rvm_execute
+          else
+            :ruby_rvm_bash
       end
 
       set_guard_inherited_attributes(

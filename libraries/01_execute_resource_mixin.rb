@@ -16,6 +16,7 @@ class RvmCookbook
         ancestor_attributes.concat(@class_inherited_attributes ? @class_inherited_attributes : []).uniq
       end
     end
+
     module InstanceMethods
       def ruby_string(arg = nil)
         set_or_return(
@@ -25,8 +26,10 @@ class RvmCookbook
         )
       end
     end
+
     def self.included(receiver)
-      receiver.extend(ClassMethods)
+      # In chef 11 'execute' resource have not inherited attributes
+      receiver.extend(ClassMethods) unless receiver.respond_to?(:set_guard_inherited_attributes) #in Chef 12
       receiver.send(:include, InstanceMethods)
     end
   end
