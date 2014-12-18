@@ -3,7 +3,11 @@ class Chef
   class Resource
     class RubyRvmExecute < Chef::Resource::Execute
       include ::RvmCookbook::ExecuteResourceMixin
+
       def initialize(name, run_context = nil)
+        if Gem::Version.new(Chef::VERSION) < Gem::Version.new(::RvmCookbook::MIN_SUPPORTED_VERSION)
+          raise "Resource 'ruby_rvm_execute' is not supported by the Chef Client #{Chef::VERSION}"
+        end
         super
         @resource_name = :ruby_rvm_execute
         @ruby_string = 'system'

@@ -32,14 +32,6 @@ gem 'rake'
 FILE
 end
 
-ruby_rvm_execute 'bundle_install' do
-  command env.command('gem list')
-  user env.user
-  environment env.environment
-  cwd env.cwd
-  action :run
-end
-
 ruby_rvm_execute 'bundle install' do
   ruby_string '2.0.0'
   user 'ubuntu'
