@@ -21,6 +21,7 @@ class RvmCookbook
             Chef::Log.error("STDIN: #{result.stdin}")
             Chef::Log.error("STDERR: #{result.stderr}")
           end
+          result
         end
 
         # Runs a given command in the current shell.
