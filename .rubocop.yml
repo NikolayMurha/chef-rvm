@@ -26,6 +26,8 @@ TrailingComma:
   Enabled: false
 WordArray:
   Enabled: false
+AccessorMethodName:
+  Enabled: false
 
 Style/CyclomaticComplexity:
   Max: 15

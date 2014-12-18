@@ -5,7 +5,7 @@ class RvmCookbook
         @class_inherited_attributes = inherited_attributes
       end
 
-      def guard_inherited_attributes(*inherited_attributes)
+      def guard_inherited_attributes(*_inherited_attributes)
         # Similar to patterns elsewhere, return attributes from this
         # class and superclasses as a form of inheritance
         ancestor_attributes = []
@@ -29,7 +29,7 @@ class RvmCookbook
 
     def self.included(receiver)
       # In chef 11 'execute' resource have not inherited attributes
-      receiver.extend(ClassMethods) unless receiver.respond_to?(:set_guard_inherited_attributes) #in Chef 12
+      receiver.extend(ClassMethods) unless receiver.respond_to?(:set_guard_inherited_attributes) # in Chef 12
       receiver.send(:include, InstanceMethods)
     end
   end

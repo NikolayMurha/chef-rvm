@@ -3,7 +3,6 @@ include RvmCookbook::Helpers
 include RvmCookbook::Helpers::RubyString
 include Chef::Mixin::ShellOut
 
-
 def whyrun_supported?
   true
 end
