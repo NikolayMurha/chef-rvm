@@ -17,10 +17,8 @@ class RvmCookbook
         def run(command, *arguments)
           Chef::Log.debug("Run command #{command} with #{arguments}")
           result = run_p(command, *arguments)
-          unless result.successful?
-            Chef::Log.error("STDIN: #{result.stdout}")
-            Chef::Log.error("STDERR: #{result.stderr}")
-          end
+          Chef::Log.debug("STDOUT: #{result.stdout}")
+          Chef::Log.debug("STDERR: #{result.stderr}")
           result
         end
 
