@@ -1,11 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rake'
-gem 'rvm'
-gem 'stove'
-gem 'test-kitchen', path: '../../test-kitchen'
-
 group :test do
+  gem 'berkshelf', '~> 3.0'
   gem 'foodcritic', '~> 3.0'
   gem 'rubocop', '~> 0.23.0'
   gem 'chefspec', '~> 3.4.0'

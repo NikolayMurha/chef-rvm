@@ -13,7 +13,7 @@ ruby_rvm_gemset 'iptables_web:gemset' do
 end
 
 ruby_rvm_gem 'iptables_web::gem::iptables_web' do
-  gem 'iptables_web'
+  gem 'iptables-web'
   user 'ubuntu'
   ruby_string '2.0.0@test'
 end
@@ -32,15 +32,15 @@ gem 'rake'
 FILE
 end
 
-# ruby_rvm_execute 'bundle_install' do
-#   command env.command('gem list')
-#   user env.user
-#   environment env.environment
-#   cwd env.cwd
-#   action :run
-# end
+ruby_rvm_execute 'bundle_install' do
+  command env.command('gem list')
+  user env.user
+  environment env.environment
+  cwd env.cwd
+  action :run
+end
 
-ruby_rvm_execute 'ruby_rvm_execute' do
+ruby_rvm_execute 'bundle install' do
   ruby_string '2.0.0'
   user 'ubuntu'
   cwd '/home/ubuntu/test'
@@ -60,8 +60,7 @@ CODE
   not_if 'bundle check'
   action :run
 end
-#
-#
+
 ruby_rvm_bash 'bundle_install' do
   ruby_string '2.0.0'
   user 'ubuntu'

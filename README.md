@@ -4,6 +4,10 @@
 
 [![Build Status](https://travis-ci.org/MurgaNikolay/chef-rvm.svg?branch=master)](https://travis-ci.org/MurgaNikolay/chef-rvm)
 
+### Supported chef-client version:
+
+Chef-Client >= 11.12.0
+
 # LWRP's
 
     ruby_rvm 'ubuntu' do
