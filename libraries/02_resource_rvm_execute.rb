@@ -15,6 +15,7 @@ class Chef
             :ruby_rvm_execute
           else
             :ruby_rvm_bash
+          end
       end
 
       set_guard_inherited_attributes(
