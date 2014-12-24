@@ -15,13 +15,12 @@ end
       next
     end
 
-    converge_by "#{action_name.to_s.capitalize} #{resource_name}" do
-      if env.wrapper new_resource.ruby_string, new_resource.prefix, new_resource.binary
-        new_resource.updated_by_last_action(true)
-        Chef::Log.debug("Creation/Update of #{resource_name} was successful.")
-      else
-        Chef::Log.warn("Failed to create/update #{resource_name}.")
-      end
+    Chef::Log.debug  "#{action_name.to_s.capitalize} #{resource_name}"
+    if env.wrapper new_resource.ruby_string, new_resource.prefix, new_resource.binary
+      new_resource.updated_by_last_action(true)
+      Chef::Log.debug("Creation/Update of #{resource_name} was successful.")
+    else
+      Chef::Log.warn("Failed to create/update #{resource_name}.")
     end
   end
 end

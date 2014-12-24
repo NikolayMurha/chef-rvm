@@ -18,8 +18,7 @@ end
       next
     end
 
-    converge_by "#{action_name.to_s.capitalize} gemset #{new_resource._gemset}." do
-      new_resource.updated_by_last_action(env.send("gemset_#{action_name}".to_sym, new_resource._gemset))
-    end
+    Chef::Log.debug "#{action_name.to_s.capitalize} gemset #{new_resource._gemset}."
+    new_resource.updated_by_last_action(env.send("gemset_#{action_name}".to_sym, new_resource._gemset))
   end
 end

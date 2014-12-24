@@ -5,10 +5,11 @@ class RvmCookbook
     end
 
     def shell_out!(*args)
-      Chef::Log.debug "Call #{rvm.shell_out_args(*args)}"
-      r = super(*rvm.shell_out_args(*args))
-      Chef::Log.debug "STDOUT: #{r.stdout}"
-      Chef::Log.debug "STDERR: #{r.stderr}"
+      arguments = rvm.shell_out_args(*args)
+      Chef::Log.debug "Call: #{arguments.join(', ')}"
+      r = super(*arguments)
+      Chef::Log.debug "STDOUT: #{r.stdout.to_s.strip}"
+      Chef::Log.debug "STDERR: #{r.stderr.to_s}" unless r.stderr.to_s.empty?
       r
     end
   end
