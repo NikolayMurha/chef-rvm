@@ -9,7 +9,7 @@ class RvmCookbook
       Chef::Log.debug "Call: #{arguments.join(', ')}"
       r = super(*arguments)
       Chef::Log.debug "STDOUT: #{r.stdout.to_s.strip}"
-      Chef::Log.debug "STDERR: #{r.stderr.to_s}" unless r.stderr.to_s.empty?
+      Chef::Log.debug "STDERR: #{r.stderr}" unless r.stderr.to_s.empty?
       r
     end
   end

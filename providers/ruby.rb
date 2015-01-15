@@ -23,7 +23,7 @@ end
 [:remove, :uninstall].each do |action_name|
   action action_name do
     requirements_install(new_resource._version)
-    Chef::Log.debug  "#{action_name.to_s.capitalize} ruby #{new_resource._version} for user #{new_resource.user}"
+    Chef::Log.debug "#{action_name.to_s.capitalize} ruby #{new_resource._version} for user #{new_resource.user}"
     if env.use(new_resource._version)
       new_resource.updated_by_last_action env.send(action_name, new_resource._version)
     end

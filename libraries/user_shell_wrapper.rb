@@ -21,7 +21,7 @@ class RvmCookbook
           status, out, err = super(command)
           Chef::Log.debug("STDOUT: #{out}")
           Chef::Log.debug("STDERR: #{err}") unless err.to_s.empty?
-          return status, out, err
+          [status, out, err]
         end
 
         # Runs a command, ensuring no output is collected.
