@@ -1,0 +1,17 @@
+DEPENDENCIES
+  ruby_rvm
+    path: .
+    metadata: true
+
+GRAPH
+  apt (2.6.0)
+  bsw_gpg (0.2.2)
+  chef_gem (0.1.0)
+  java (1.29.0)
+  ruby_rvm (0.4.7)
+    apt (>= 0.0.0)
+    bsw_gpg (>= 0.0.0)
+    chef_gem (>= 0.0.0)
+    java (>= 0.0.0)
+    sudo (>= 0.0.0)
+  sudo (2.7.1)
