@@ -7,7 +7,7 @@ node['rvm']['users'].each do |username, rvm_settings|
       if gem_name.is_a?(Hash)
         resource_config = gem_name
       else
-        resource_config = { 'gem' => gem_name }
+        resource_config = {'gem' => gem_name}
       end
 
       resource_config.merge!(gem_version) if gem_version.is_a?(Hash)

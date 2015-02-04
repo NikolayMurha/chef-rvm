@@ -82,15 +82,15 @@ def install_rvmvc
     owner new_resource.user
     mode '0644'
     variables system_install: new_resource.system?,
-              rvmrc: new_resource.rvmrc_properties.merge(
-                                            rvm_path: rvm_path
-                                          )
+      rvmrc: new_resource.rvmrc_properties.merge(
+        rvm_path: rvm_path
+      )
     action :create
   end
 end
 
 def rvm_environment
-  env = { 'TERM' => 'dumb' }
+  env = {'TERM' => 'dumb'}
   env.merge(
     'USER' => new_resource.user,
     'HOME' => new_resource.user_home

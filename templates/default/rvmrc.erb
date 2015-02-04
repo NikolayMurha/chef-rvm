@@ -6,6 +6,6 @@
 <% if @system_install -%>
 umask g+w
 <% end -%>
-<% @rvmrc.each_pair do |k,v| -%>
+<% @rvmrc.each_pair do |k, v| -%>
 export <%= k %>=<%= v.is_a?(String) ? "\"#{v}\"" : v %>
 <% end -%>

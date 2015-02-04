@@ -1,4 +1,3 @@
-
 actions :install, :implode, :upgrade
 default_action :install
 attribute :user, kind_of: [String, NilClass], name_attribute: true, default: 'root'

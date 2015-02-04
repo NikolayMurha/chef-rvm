@@ -2,6 +2,7 @@ class Chef
   class Resource
     class RubyRvmScript < Chef::Resource::Script
       include ::RvmCookbook::ExecuteResourceMixin
+
       def initialize(name, run_context = nil)
         if Gem::Version.new(Chef::VERSION) < Gem::Version.new(::RvmCookbook::MIN_SUPPORTED_VERSION)
           raise "Resource 'ruby_rvm_script' is not supported by the Chef Client #{Chef::VERSION}. Please upgrade Chef Client to #{::RvmCookbook::MIN_SUPPORTED_VERSION} or higher."
