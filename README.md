@@ -10,24 +10,24 @@ Chef-Client >= 11.12.0
 
 # LWRP's
 
-    ruby_rvm 'ubuntu' do
+    chef_rvm 'ubuntu' do
        action :install
     end
 
-    ruby_rvm_ruby 'ubuntu:ruby:1.9.3' do
+    chef_rvm_ruby 'ubuntu:ruby:1.9.3' do
       version '1.9.3'
       patch 'falcon'
       default true
       action :install
     end
 
-    ruby_rvm_gemset 'ubuntu:gemset:1.9.3:test' do
+    chef_rvm_gemset 'ubuntu:gemset:1.9.3:test' do
        ruby_string '1.9.3@test'
        user 'ubuntu'
        action :create
     end
 
-    ruby_rvm_gem 'ubuntu:unicorn' do
+    chef_rvm_gem 'ubuntu:unicorn' do
        gem 'unicorn'
        user 'ubuntu'
        ruby_string '1.9.3@test'
@@ -40,7 +40,7 @@ Execute scripts in rvm environment.
 All resources worked like native resources but guards inherit environment from resource by default.
 
 
-    ruby_rvm_execute 'bundle install' do
+    chef_rvm_execute 'bundle install' do
       ruby_string '2.0.0'
       user 'ubuntu'
       cwd '/home/ubuntu/test'
@@ -49,7 +49,7 @@ All resources worked like native resources but guards inherit environment from r
       action :run
     end
 
-    ruby_rvm_script 'bundle_install_sh' do
+    chef_rvm_script 'bundle_install_sh' do
       interpreter 'sh'
       ruby_string '2.0.0'
       user 'ubuntu'
@@ -61,7 +61,7 @@ All resources worked like native resources but guards inherit environment from r
       action :run
     end
 
-    ruby_rvm_bash 'bundle_install' do
+    chef_rvm_bash 'bundle_install' do
        ruby_string '2.0.0'
        user 'ubuntu'
        cwd '/home/ubuntu/test'
@@ -120,12 +120,12 @@ All resources worked like native resources but guards inherit environment from r
 
 # Recipes
 
-    recipe[ruby_rvm::default] # Full installations
-    recipe[ruby_rvm::packages] # Required packages
-    recipe[ruby_rvm::rvm]
-    recipe[ruby_rvm::rubies]
-    recipe[ruby_rvm::gems]
-    recipe[ruby_rvm::wrappers]
+    recipe[chef_rvm::default] # Full installations
+    recipe[chef_rvm::packages] # Required packages
+    recipe[chef_rvm::rvm]
+    recipe[chef_rvm::rubies]
+    recipe[chef_rvm::gems]
+    recipe[chef_rvm::wrappers]
 
 # Author
 

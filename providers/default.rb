@@ -10,7 +10,7 @@ end
 use_inline_resources
 
 action :install do
-  include_recipe 'ruby_rvm'
+  include_recipe 'chef_rvm'
   Chef::Log.info "Install GPG key for RVM for user #{new_resource.user}"
   bsw_gpg_load_key_from_key_server 'rvm_key' do
     key_server 'keys.gnupg.net'
@@ -35,7 +35,7 @@ action :install do
 
   Array(new_resource.rubies).each do |rubie|
     ruby_version = normalize_ruby_version(rubie)
-    ruby_rvm_ruby "#{new_resource.user}:#{ruby_version[:version]}" do
+    chef_rvm_ruby "#{new_resource.user}:#{ruby_version[:version]}" do
       user new_resource.user
       version ruby_version[:version]
       default ruby_version[:default]
@@ -77,7 +77,7 @@ def install_rvmvc
   end
 
   template rvmrc_file do
-    cookbook 'ruby_rvm'
+    cookbook 'chef_rvm'
     source 'rvmrc.erb'
     owner new_resource.user
     mode '0644'

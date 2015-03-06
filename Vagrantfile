@@ -73,7 +73,7 @@ Vagrant.configure("2") do |config|
 
     }
     chef.run_list = %w(
-      recipe[ruby_rvm::test]
+      recipe[chef_rvm::test]
     )
   end
 end

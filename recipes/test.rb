@@ -3,16 +3,16 @@ user 'ubuntu' do
   supports :manage_home => true
 end
 
-ruby_rvm 'ubuntu' do
+chef_rvm 'ubuntu' do
   rubies '2.0.0@iptables_web'
 end
 
-ruby_rvm_gemset 'iptables_web:gemset' do
+chef_rvm_gemset 'iptables_web:gemset' do
   user 'ubuntu'
   ruby_string '2.0.0@test'
 end
 
-ruby_rvm_gem 'iptables_web::gem::iptables_web' do
+chef_rvm_gem 'iptables_web::gem::iptables_web' do
   gem 'iptables-web'
   user 'ubuntu'
   ruby_string '2.0.0@test'
@@ -32,7 +32,7 @@ gem 'rake'
 FILE
 end
 
-ruby_rvm_execute 'bundle install' do
+chef_rvm_execute 'bundle install' do
   ruby_string '2.0.0'
   user 'ubuntu'
   cwd '/home/ubuntu/test'
@@ -41,7 +41,7 @@ ruby_rvm_execute 'bundle install' do
   action :run
 end
 
-ruby_rvm_script 'bundle_install_sh' do
+chef_rvm_script 'bundle_install_sh' do
   interpreter 'sh'
   ruby_string '2.0.0'
   user 'ubuntu'
@@ -53,7 +53,7 @@ CODE
   action :run
 end
 
-ruby_rvm_bash 'bundle_install' do
+chef_rvm_bash 'bundle_install' do
   ruby_string '2.0.0'
   user 'ubuntu'
   cwd '/home/ubuntu/test'
