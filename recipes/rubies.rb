@@ -1,5 +1,5 @@
 include_recipe 'chef_rvm::packages'
-node['rvm']['users'].each do |username, rvm_settings|
+node['chef_rvm']['users'].each do |username, rvm_settings|
   next unless rvm_settings['rubies']
   rubies = rvm_settings['rubies']
   rubies = Array(rubies) if rubies.is_a?(String)

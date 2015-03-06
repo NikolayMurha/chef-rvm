@@ -1,6 +1,6 @@
 include_recipe 'chef_rvm::packages'
 
-node['rvm']['users'].each do |username, rvm_settings|
+node['chef_rvm']['users'].each do |username, rvm_settings|
   rvm_settings['gems'].each do |gemset, gems|
     gems = Array(gems) if gems.is_a?(String)
     gems.each do |gem_name, gem_version|

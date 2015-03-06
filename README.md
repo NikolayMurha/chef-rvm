@@ -75,14 +75,14 @@ All resources worked like native resources but guards inherit environment from r
 
 # Attributes
       # Options for .rvmrc
-      node['rvm']['rvmrc'] = {
+      node['chef_rvm']['rvmrc'] = {
         'rvm_gem_options' => '--no-rdoc --no-ri',
         'rvm_autoupdate_flag' => 0
       }
 
       # User installations
 
-      node['rvm'] = {
+      node['chef_rvm'] = {
         users: {
           ubuntu: {
             rubies: {

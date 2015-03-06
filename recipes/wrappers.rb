@@ -1,5 +1,5 @@
 include_recipe 'chef_rvm::packages'
-node['rvm']['users'].each do |username, rvm|
+node['chef_rvm']['users'].each do |username, rvm|
   rvm['wrappers'].each do |gemset, scopes|
     scopes.each do |scope, binaries|
       Array(binaries).each do |binary|

@@ -14,5 +14,5 @@ def user_home
 end
 
 def rvmrc_properties
-  node['rvm']['rvmrc'].merge(rvmrc || {})
+  node['chef_rvm']['rvmrc'].merge(rvmrc || {})
 end
