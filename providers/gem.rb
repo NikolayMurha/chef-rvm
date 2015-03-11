@@ -18,11 +18,14 @@ end
     end
 
     version = new_resource.version ? "-v #{new_resource.version}" : ''
-    if action_name == :install && env.run!("gem list -i #{new_resource.gem} #{version}").successful?
+    if action_name == :install && env.run("gem list -i #{new_resource.gem} #{version}").successful?
       Chef::Log.debug("Gem #{new_resource.gem} alredy installed! So skip!")
       next
     end
     Chef::Log.debug "#{action_name.to_s.capitalize} gem #{new_resource.gem}"
-    new_resource.updated_by_last_action env.run!("gem #{action_name} #{new_resource.gem} #{version}").successful?
+    unless env.run("gem #{action_name} #{new_resource.gem} #{version}").successful?
+      raise "gem install error: #{new_resource.gem}"
+    end
+    new_resource.updated_by_last_action true
   end
 end
