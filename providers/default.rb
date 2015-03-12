@@ -13,7 +13,7 @@ action :install do
   include_recipe 'ruby_rvm'
   Chef::Log.info "Install GPG key for RVM for user #{new_resource.user}"
   bsw_gpg_load_key_from_key_server 'rvm_key' do
-    key_server 'keys.gnupg.net'
+    key_server 'keyserver.ubuntu.com'
     key_id 'D39DC0E3'
     for_user new_resource.user
   end
