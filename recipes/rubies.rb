@@ -1,6 +1,6 @@
 include_recipe 'ruby_rvm::packages'
 node['rvm']['users'].each do |username, rvm_settings|
-  next if rvm_settings['rubies']
+  next unless rvm_settings['rubies']
   rubies = rvm_settings['rubies']
   rubies = Array(rubies) if rubies.is_a?(String)
   rubies.each do |version, action|
