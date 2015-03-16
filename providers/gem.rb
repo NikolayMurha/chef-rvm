@@ -23,6 +23,9 @@ end
       next
     end
     Chef::Log.debug "#{action_name.to_s.capitalize} gem #{new_resource.gem}"
-    new_resource.updated_by_last_action env.run("gem #{action_name} #{new_resource.gem} #{version}").successful?
+    unless env.run("gem #{action_name} #{new_resource.gem} #{version}").successful?
+      raise "gem install error: #{new_resource.gem}"
+    end
+    new_resource.updated_by_last_action true
   end
 end
