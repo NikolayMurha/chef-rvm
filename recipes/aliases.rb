@@ -5,7 +5,6 @@ node['chef_rvm']['users'].each do |username, rvm|
       user username
       ruby_string ruby_string
       alias_name alias_name
-      action resource_config['action'] if resource_config['action']
     end
   end if rvm['aliases']
 end

@@ -102,7 +102,7 @@ All resources worked like native resources but guards inherit environment from r
                 bootup: [
                   {
                     binary: 'eye',
-                    action: 'update'
+                    action: 'create_or_update'
                   }
                 ]
               },
