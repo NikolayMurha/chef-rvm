@@ -14,14 +14,16 @@ recipe 'chef_rvm::rubies', 'Installs rubies'
 recipe 'chef_rvm::gems', 'Creates gemsets and install gems'
 recipe 'chef_rvm::packages', 'General recipe. Installs dependencies for other recipes.'
 recipe 'chef_rvm::wrappers', 'Create wrappers'
+recipe 'chef_rvm::aliases', 'Create aliases'
 
 supports 'ubuntu'
 supports 'debian'
 
 depends 'sudo'
 depends 'apt'
-depends 'bsw_gpg'
+depends 'build-essential'
 depends 'chef_gem'
+depends 'gpg'
 
 # if using jruby, java is required on system
 recommends 'java'

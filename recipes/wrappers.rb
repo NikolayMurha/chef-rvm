@@ -1,4 +1,4 @@
-include_recipe 'chef_rvm::packages'
+include_recipe 'chef_rvm::rvm'
 node['chef_rvm']['users'].each do |username, rvm|
   rvm['wrappers'].each do |gemset, scopes|
     scopes.each do |scope, binaries|

@@ -1,12 +1,27 @@
-class RvmCookbook
+class ChefRvmCookbook
   module Requirements
+    module Cache
+      class << self
+        def get(key)
+          storage[key]
+        end
+
+        def set(key, value)
+          storage[key] = value
+        end
+
+        def storage
+          @storage ||= {}
+        end
+      end
+    end
+
     def requirements_install(rubie)
       pkgs = []
-      Chef::Log.debug("Install ruby for version #{rubie}")
       case rubie
         when /^jruby/
-          return if RvmCookbook::Cache.get('jruby')
-          RvmCookbook::Cache.set('jruby', 1)
+          return if Cache.get('jruby')
+          Cache.set('jruby', 1)
           begin
             resource_collection.find('ruby_block[update-java-alternatives]').run_action(:create)
           rescue Chef::Exceptions::ResourceNotFound
@@ -21,8 +36,8 @@ class RvmCookbook
               pkgs += %w(g++ ant)
           end
         else # /^ruby-/, /^ree-/, /^rbx-/, /^kiji/
-          return if RvmCookbook::Cache.get('ruby')
-          RvmCookbook::Cache.set('ruby', 1)
+          return if Cache.get('ruby')
+          Cache.set('ruby', 1)
           case node['platform']
             when 'debian', 'ubuntu'
               pkgs = %w(build-essential openssl libreadline6 libreadline6-dev
@@ -49,7 +64,8 @@ class RvmCookbook
               pkgs = %w(libiconv readline zlib openssl libyaml sqlite libxslt libtool gcc autoconf automake bison m4)
           end
       end
-      Chef::Log.debug("Install rvm ruby requirements #{pkgs} for #{rubie}")
+      Chef::Log.debug("Install ruby requirements for version #{rubie}")
+      # Chef::Log.debug("Install rvm ruby requirements #{pkgs} for #{rubie}")
       pkgs.each do |pkg|
         package pkg do
           action :nothing

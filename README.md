@@ -97,23 +97,25 @@ All resources worked like native resources but guards inherit environment from r
               ],
               '1.9.3@test3' => 'unicorn',
             },
-            wrappers:
-              {
-                :'1.9.3@test' => {
-                  bootup: [
-                    {
-                      binary: 'eye',
-                      action: 'update'
-                    }
-                  ]
-                },
-                :'1.9.3@test2' => {
-                  bootup: %w(eye unicorn)
-                },
-                :'1.9.3@test3' => {
-                  bootup: 'unicorn'
-                }
+            wrappers: {
+              :'1.9.3@test' => {
+                bootup: [
+                  {
+                    binary: 'eye',
+                    action: 'update'
+                  }
+                ]
+              },
+              :'1.9.3@test2' => {
+                bootup: %w(eye unicorn)
+              },
+              :'1.9.3@test3' => {
+                bootup: 'unicorn'
               }
+            },
+            aliases: {
+              'bla_bla' => '2.0.0'
+            }
           }
         }
       }

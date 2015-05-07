@@ -1,4 +1,4 @@
-include_recipe 'chef_rvm::packages'
+include_recipe 'chef_rvm::rvm'
 node['chef_rvm']['users'].each do |username, rvm_settings|
   next unless rvm_settings['rubies']
   rubies = rvm_settings['rubies']

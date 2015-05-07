@@ -1,6 +1,6 @@
-include Chef::DSL::IncludeRecipe
-include RvmCookbook::Requirements
-include RvmCookbook::EnvironmentFactory
+# include Chef::DSL::IncludeRecipe
+include ChefRvmCookbook::Requirements
+include ChefRvmCookbook::RvmProviderMixin
 
 use_inline_resources
 
@@ -9,27 +9,24 @@ def whyrun_supported?
 end
 
 action :install do
-  requirements_install(new_resource._version)
-  Chef::Log.debug "Install ruby #{new_resource._version} for user #{new_resource.user}"
-  unless check_and_set_default
-    options = {:rvm_by_path => true}
-    options[:patch] = new_resource.patch if new_resource.patch
-    raise "Ruby #{new_resource._version} can't be installed" unless env.install(new_resource._version, options)
-    new_resource.updated_by_last_action true
-    check_and_set_default
+  if rvm.ruby?(new_resource.version)
+    Chef::Log.debug "Ruby #{new_resource.version} already installed for user #{new_resource.user}"
+  else
+    requirements_install(new_resource.version)
+    Chef::Log.debug "Install ruby #{new_resource.version} for user #{new_resource.user}"
+    rvm.ruby_install(new_resource.version, new_resource.patch)
+    new_resource.updated_by_last_action(true)
   end
+  rvm.ruby_set_default(new_resource.version) if new_resource.default
 end
 
-[:remove, :uninstall].each do |action_name|
+[:remove, :uninstall, :reinstall].each do |action_name|
   action action_name do
-    requirements_install(new_resource._version)
-    Chef::Log.debug "#{action_name.to_s.capitalize} ruby #{new_resource._version} for user #{new_resource.user}"
-    if env.use(new_resource._version)
-      new_resource.updated_by_last_action env.send(action_name, new_resource._version)
+    if rvm.ruby?(new_resource.version)
+      Chef::Log.debug "#{action_name.to_s.capitalize} ruby #{new_resource.version} for user #{new_resource.user}"
+      new_resource.updated_by_last_action(true)
+    else
+      Chef::Log.debug "Ruby #{new_resource.version} is not installed for user #{new_resource.user}"
     end
   end
-end
-
-def check_and_set_default
-  env.rvm(:use, new_resource._version, ('--default' if new_resource.default)).successful?
 end

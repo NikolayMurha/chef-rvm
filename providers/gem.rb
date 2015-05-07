@@ -1,28 +1,33 @@
-include RvmCookbook::EnvironmentFactory
+include ChefRvmCookbook::RvmProviderMixin
 use_inline_resources
 
 def whyrun_supported?
   true
 end
 
-[:install, :update, :uninstall].each do |action_name|
-  action action_name do
-    Chef::Log.debug("#{action_name.to_s.capitalize} #{new_resource.gem} in #{new_resource.ruby_string} from user #{new_resource.user}")
-    raise "Can't install gem #{new_resource.gem} because ruby #{new_resource._version} not installed!" unless env.use(new_resource._version)
-    if new_resource._gemset
-      unless env.gemset_use(new_resource._gemset)
-        Chef::Log.debug "Create gemset for #{new_resource.ruby_string}!"
-        env.gemset_create(new_resource._gemset)
-      end
-      raise "Can't change environment to #{new_resource.ruby_string} for install gem #{new_resource.gem}" unless env.gemset_use(new_resource._gemset)
-    end
 
-    version = new_resource.version ? "-v #{new_resource.version}" : ''
-    if action_name == :install && env.run("gem list -i #{new_resource.gem} #{version}").successful?
-      Chef::Log.debug("Gem #{new_resource.gem} alredy installed! So skip!")
-      next
+action :install do
+  unless rvm.gemset?(new_resource.ruby_string)
+    Chef::Log.debug('Create gemset before installing gem')
+    rvm.gemset_create(new_resource.ruby_string)
+  end
+
+  if rvm.gem?(new_resource.ruby_string, new_resource.gem, new_resource.version)
+    Chef::Log.debug("Gem #{new_resource.gem} #{new_resource.version} already installed on gemset #{new_resource.ruby_string} for user #{new_resource.user}.")
+  else
+    Chef::Log.debug("Install gem #{new_resource.gem} #{new_resource.version} on gemset #{new_resource.ruby_string} for user #{new_resource.user}.")
+    rvm.gem_install(new_resource.ruby_string, new_resource.gem, new_resource.version)
+    new_resource.updated_by_last_action(true)
+  end
+end
+
+[:update, :uninstall].each do |action_name|
+  action action_name do
+    if rvm.gem?(new_resource.ruby_string, new_resource.gem, new_resource.version)
+      Chef::Log.debug "#{action_name.to_s.capitalize} gem #{new_resource.gem} #{new_resource.version} from gemset #{new_resource.ruby_string} for user #{new_resource.user}."
+      new_resource.updated_by_last_action(true)
+    else
+      Chef::Log.debug "Gem #{new_resource.gem} #{new_resource.version} is not installed on gemset #{new_resource.ruby_string} for user #{new_resource.user}."
     end
-    Chef::Log.debug "#{action_name.to_s.capitalize} gem #{new_resource.gem}"
-    new_resource.updated_by_last_action env.run("gem #{action_name} #{new_resource.gem} #{version}").successful?
   end
 end
