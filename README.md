@@ -9,6 +9,7 @@
 Chef-Client >= 11.12.0
 
 # LWRP's
+```ruby
 
     chef_rvm 'ubuntu' do
        action :install
@@ -33,6 +34,22 @@ Chef-Client >= 11.12.0
        ruby_string '1.9.3@test'
        action :install
     end
+
+    chef_rvm_wrapper 'ubuntu:my_project_unicorn' do
+       user 'ubuntu'
+       ruby_string '1.9.3@test'
+       prefix 'my_project'
+       binary 'unicorn'
+       action :create
+    end
+    
+    chef_rvm_alias 'ubuntu:my_alias' do
+       user 'ubuntu'
+       alias_name 'my_alias'
+       ruby_string '1.9.3@test'
+       action :create
+    end
+```
 
 #Execute
 
@@ -114,7 +131,8 @@ All resources worked like native resources but guards inherit environment from r
               }
             },
             aliases: {
-              'bla_bla' => '2.0.0'
+              'my_alias' => '2.0.0',
+              'my_alias_2' => '1.9.3@test2'
             }
           }
         }
@@ -125,9 +143,12 @@ All resources worked like native resources but guards inherit environment from r
     recipe[chef_rvm::default] # Full installations
     recipe[chef_rvm::packages] # Required packages
     recipe[chef_rvm::rvm]
+    recipe[chef_rvm::gemsets] # Create gemset
     recipe[chef_rvm::rubies]
     recipe[chef_rvm::gems]
     recipe[chef_rvm::wrappers]
+    recipe[chef_rvm::aliases]
+    
 
 # Author
 

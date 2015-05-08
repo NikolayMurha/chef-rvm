@@ -1,7 +1,7 @@
 include_recipe 'chef_rvm::rvm'
-node['chef_rvm']['users'].each do |username, rvm_settings|
-  next unless rvm_settings['rubies']
-  rubies = rvm_settings['rubies']
+node['chef_rvm']['users'].each do |username, rvm|
+  next unless rvm['rubies']
+  rubies = rvm['rubies']
   rubies = Array(rubies) if rubies.is_a?(String)
   rubies.each do |version, action|
     resource_config = {}
