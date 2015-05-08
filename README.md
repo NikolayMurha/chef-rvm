@@ -10,31 +10,34 @@ Chef-Client >= 11.12.0
 
 # LWRP's
 ```ruby
-
     chef_rvm 'ubuntu' do
        action :install
     end
-
+```
+```ruby
     chef_rvm_ruby 'ubuntu:ruby:1.9.3' do
       version '1.9.3'
       patch 'falcon'
       default true
       action :install
     end
-
+```
+```ruby
     chef_rvm_gemset 'ubuntu:gemset:1.9.3:test' do
        ruby_string '1.9.3@test'
        user 'ubuntu'
        action :create
     end
-
+```
+```ruby
     chef_rvm_gem 'ubuntu:unicorn' do
        gem 'unicorn'
        user 'ubuntu'
        ruby_string '1.9.3@test'
        action :install
     end
-
+```
+```ruby
     chef_rvm_wrapper 'ubuntu:my_project_unicorn' do
        user 'ubuntu'
        ruby_string '1.9.3@test'
@@ -42,7 +45,8 @@ Chef-Client >= 11.12.0
        binary 'unicorn'
        action :create
     end
-    
+```
+```ruby    
     chef_rvm_alias 'ubuntu:my_alias' do
        user 'ubuntu'
        alias_name 'my_alias'
@@ -56,7 +60,7 @@ Chef-Client >= 11.12.0
 Execute scripts in rvm environment.
 All resources worked like native resources but guards inherit environment from resource by default.
 
-
+```ruby
     chef_rvm_execute 'bundle install' do
       ruby_string '2.0.0'
       user 'ubuntu'
@@ -65,7 +69,8 @@ All resources worked like native resources but guards inherit environment from r
       not_if 'bundle check'
       action :run
     end
-
+```
+```ruby
     chef_rvm_script 'bundle_install_sh' do
       interpreter 'sh'
       ruby_string '2.0.0'
@@ -77,7 +82,9 @@ All resources worked like native resources but guards inherit environment from r
       not_if 'bundle check'
       action :run
     end
+```
 
+```ruby
     chef_rvm_bash 'bundle_install' do
        ruby_string '2.0.0'
        user 'ubuntu'
@@ -88,7 +95,7 @@ All resources worked like native resources but guards inherit environment from r
       action :run
       not_if 'bundle check'
     end
-
+```
 
 # Attributes
       # Options for .rvmrc
