@@ -9,16 +9,21 @@
 Chef-Client >= 11.12.0
 
 # LWRP's
+
+### chef_rvm 
 ```ruby
 chef_rvm 'ubuntu'
 ```
+
 #### Actions
 
 | Action | Description |
 |--------|--------------|
 | `:install` |  This is default action  |
-| `:implode` |    |
-| `:upgrade` |    |
+| `:implode` |                          |
+| `:upgrade` |                          |
+
+### chef_rvm_ruby
 
 ```ruby
 chef_rvm_ruby 'ubuntu:ruby:1.9.3' do
@@ -36,6 +41,8 @@ end
 | `:remove`    |               |
 | `:uninstall` |               |
 | `:reinstall` |               |
+
+### chef_rvm_gemset
 
 ```ruby
 chef_rvm_gemset 'ubuntu:gemset:1.9.3:test' do
@@ -55,6 +62,8 @@ end
 | `:pristine`   |               |
 | `:prune`      |               |
 
+### chef_rvm_gem
+
 ```ruby
 chef_rvm_gem 'ubuntu:unicorn' do
    gem 'unicorn'
@@ -70,6 +79,8 @@ end
 | `:install`     |  This is default action  |
 | `:uninstall`     |               |
 | `:update`     |               |
+
+### chef_rvm_wrapper
 
 ```ruby
 chef_rvm_wrapper 'ubuntu:my_project_unicorn' do
@@ -88,6 +99,7 @@ end
 | `:create`     |  This is default action  |
 | `:create_or_update`     |               |
 
+### chef_rvm_wrapper
 ```ruby    
     chef_rvm_alias 'ubuntu:my_alias' do
        user 'ubuntu'
