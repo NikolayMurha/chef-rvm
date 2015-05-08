@@ -10,42 +10,84 @@ Chef-Client >= 11.12.0
 
 # LWRP's
 ```ruby
-    chef_rvm 'ubuntu' do
-       action :install
-    end
+chef_rvm 'ubuntu'
 ```
+#### Actions
+
+| Action | Description |
+|--------|--------------|
+| `:install` |  This is default action  |
+| `:implode` |    |
+| `:upgrade` |    |
+
 ```ruby
-    chef_rvm_ruby 'ubuntu:ruby:1.9.3' do
-      version '1.9.3'
-      patch 'falcon'
-      default true
-      action :install
-    end
+chef_rvm_ruby 'ubuntu:ruby:1.9.3' do
+  version '1.9.3'
+  patch 'falcon'
+  default true
+end
 ```
+
+#### Actions
+
+| Action    | Description   |
+|-----------|---------------|
+| `:install`   |  This is default action  |
+| `:remove`    |               |
+| `:uninstall` |               |
+| `:reinstall` |               |
+
 ```ruby
-    chef_rvm_gemset 'ubuntu:gemset:1.9.3:test' do
-       ruby_string '1.9.3@test'
-       user 'ubuntu'
-       action :create
-    end
+chef_rvm_gemset 'ubuntu:gemset:1.9.3:test' do
+   ruby_string '1.9.3@test'
+   user 'ubuntu'
+   action :create
+end
 ```
+
+#### Actions
+
+| Action        | Description   |
+|---------------|---------------|
+| `:create`     |  This is default action  |
+| `:delete`     |               |
+| `:update`     |               |
+| `:pristine`   |               |
+| `:prune`      |               |
+
 ```ruby
-    chef_rvm_gem 'ubuntu:unicorn' do
-       gem 'unicorn'
-       user 'ubuntu'
-       ruby_string '1.9.3@test'
-       action :install
-    end
+chef_rvm_gem 'ubuntu:unicorn' do
+   gem 'unicorn'
+   user 'ubuntu'
+   ruby_string '1.9.3@test'
+end
 ```
+
+#### Actions
+
+| Action        | Description   |
+|---------------|---------------|
+| `:install`     |  This is default action  |
+| `:uninstall`     |               |
+| `:update`     |               |
+
 ```ruby
-    chef_rvm_wrapper 'ubuntu:my_project_unicorn' do
-       user 'ubuntu'
-       ruby_string '1.9.3@test'
-       prefix 'my_project'
-       binary 'unicorn'
-       action :create
-    end
+chef_rvm_wrapper 'ubuntu:my_project_unicorn' do
+   user 'ubuntu'
+   ruby_string '1.9.3@test'
+   prefix 'my_project'
+   binary 'unicorn'
+   action :create
+end
 ```
+
+#### Actions
+
+| Action        | Description   |
+|---------------|---------------|
+| `:create`     |  This is default action  |
+| `:create_or_update`     |               |
+
 ```ruby    
     chef_rvm_alias 'ubuntu:my_alias' do
        user 'ubuntu'
@@ -54,6 +96,15 @@ Chef-Client >= 11.12.0
        action :create
     end
 ```
+
+#### Actions
+
+| Action        | Description   |
+|---------------|---------------|
+| `:create`     |  This is default action  |
+| `:delete`     |               |
+
+
 
 #Execute
 
