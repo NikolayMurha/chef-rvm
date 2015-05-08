@@ -3,13 +3,6 @@ include_recipe 'apt'
 include_recipe 'chef_rvm'
 include_recipe 'chef_rvm_example::user'
 
-user 'ubuntu' do
-  supports :manage_home => true
-  comment 'Ubuntu User'
-  home '/home/ubuntu'
-  shell '/bin/bash'
-end
-
 directory '/home/ubuntu/test' do
   owner 'ubuntu'
 end
