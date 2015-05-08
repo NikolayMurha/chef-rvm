@@ -6,6 +6,35 @@ require_relative 'rvm_simple_environment/gemset'
 require_relative 'rvm_simple_environment/gem'
 require_relative 'rvm_simple_environment/alias'
 
+# rvm = RvmSimpleEnvironment.new({ :user => 'ubuntu', use: '' })
+# rvm.use('2.0.0') # set default ruby_string
+# If you skip ruby_string in commands, default ruby string will be used
+# rvm.do('ruby --version')
+# rvm.in(direcotry)
+#
+# rvm.gemset?('2.0.0@iptables-web')
+# rvm.gemset_create('2.0.0@iptables-web')
+# rvm.gemset_delete('2.2.0@iptables-web')
+#
+# rvm.ruby?('2.0.0')
+# rvm.ruby_install('2.0.0')
+# rvm.ruby_remove('2.0.0')
+#
+# rvm.gem?('2.0.0@default', 'eye', '0.6.4')
+# rvm.gem_install('2.0.0')
+# rvm.gem_uninstall('2.0.0')
+#
+# rvm.alias?('my_alias')
+# rvm.alias_create('2.0.0@default', 'myalias')
+# rvm.alias_delete('myalias')
+# rvm.shell_out()
+#
+# # exceptions
+# RvmEnvitonment::RvmDidNotInstalled
+# RvmEnvitonment::RubyDidNotInstalled
+# RvmEnvitonment::GemsetDoNotExist
+
+
 class ChefRvmCookbook
   class RvmSimpleEnvironment
     include Chef::Mixin::ShellOut
@@ -117,33 +146,3 @@ class ChefRvmCookbook
     attr_accessor :gemset
   end
 end
-
-
-# rvm = RvmSimpleEnvironment.new({ :user => 'ubuntu', use: '' })
-# rvm.use('2.0.0') # set default ruby
-#
-# rvm.do('2.0.0@default"', 'rvm list')
-# rvm.in(direcotry)
-#
-# rvm.gemset?('2.0.0@iptables-web')
-# rvm.gemset_create('2.0.0@iptables-web')
-# rvm.gemset_delete('2.2.0@iptables-web')
-#
-# rvm.ruby?('2.0.0')
-# rvm.ruby_install('2.0.0')
-# rvm.ruby_remove('2.0.0')
-#
-# rvm.gem?('2.0.0@default', 'eye', '0.6.4')
-# rvm.gem_install('2.0.0')
-# rvm.gem_uninstall('2.0.0')
-#
-# rvm.alias?('my_alias')
-# rvm.alias_create('2.0.0@default', 'myalias')
-# rvm.alias_delete('myalias')
-# rvm.shell_out()
-#
-# # exceptions
-# RvmEnvitonment::RvmDidNotInstalled
-# RvmEnvitonment::RubyDidNotInstalled
-# RvmEnvitonment::GemsetDoNotExist
-
