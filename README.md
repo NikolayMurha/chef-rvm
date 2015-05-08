@@ -99,7 +99,8 @@ end
 | `:create`     |  This is default action  |
 | `:create_or_update`     |               |
 
-### chef_rvm_wrapper
+### chef_rvm_alias
+
 ```ruby    
     chef_rvm_alias 'ubuntu:my_alias' do
        user 'ubuntu'
