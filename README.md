@@ -12,7 +12,12 @@ Chef-Client >= 11.12.0
 
 ### chef_rvm 
 ```ruby
-chef_rvm 'ubuntu'
+chef_rvm 'ubuntu' do
+  rubies ['2.0.0', '2.1.1']
+  rvmrc({
+    'rvm_autoupdate_flag'=> '1'
+  })
+end
 ```
 
 #### Actions
@@ -162,7 +167,7 @@ All resources worked like native resources but guards inherit environment from r
 ```
 
 # Attributes
-      # Options for .rvmrc
+      # Default options for .rvmrc for all users
       node['chef_rvm']['rvmrc'] = {
         'rvm_gem_options' => '--no-rdoc --no-ri',
         'rvm_autoupdate_flag' => 0
