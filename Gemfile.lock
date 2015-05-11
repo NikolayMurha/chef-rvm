@@ -147,8 +147,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  chef
   chefspec (~> 4.2.0)
   foodcritic (~> 4.0)
+  pry
+  rspec
   rubocop (~> 0.0)
   stove
   test-kitchen (~> 1.3.0)

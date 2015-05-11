@@ -1,7 +1,6 @@
-include_recipe 'ruby_rvm::packages'
-
-node['rvm']['users'].each do |name, options|
-  ruby_rvm name do
+include_recipe 'chef_rvm::packages'
+node['chef_rvm']['users'].each do |name, options|
+  chef_rvm name do
     action options['action'] if options
   end
-end if node['rvm']
+end if node['chef_rvm']

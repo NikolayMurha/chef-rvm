@@ -1,6 +1,6 @@
 class Chef
   class Provider
-    class RubyRvmBash < Chef::Provider::RubyRvmScript
+    class ChefRvmBash < Chef::Provider::ChefRvmScript
     end
   end
 end

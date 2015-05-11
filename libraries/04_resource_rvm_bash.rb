@@ -1,11 +1,11 @@
 class Chef
   class Resource
-    class RubyRvmBash < Chef::Resource::RubyRvmScript
+    class ChefRvmBash < Chef::Resource::ChefRvmScript
       def initialize(name, run_context = nil)
         super
-        @resource_name = :ruby_rvm_bash
+        @resource_name = :chef_rvm_bash
         @interpreter = 'bash'
-        @guard_interpreter = :ruby_rvm_bash
+        @guard_interpreter = :chef_rvm_bash
       end
     end
   end

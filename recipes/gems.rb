@@ -1,25 +1,17 @@
-include_recipe 'ruby_rvm::packages'
+include_recipe 'chef_rvm::rvm'
 
-node['rvm']['users'].each do |username, rvm_settings|
-  rvm_settings['gems'].each do |gemset, gems|
+node['chef_rvm']['users'].each do |username, rvm|
+  rvm['gems'].each do |ruby_string, gems|
     gems = Array(gems) if gems.is_a?(String)
-    gems.each do |gem_name, gem_version|
-      if gem_name.is_a?(Hash)
-        resource_config = gem_name
-      else
-        resource_config = {'gem' => gem_name}
-      end
-
-      resource_config.merge!(gem_version) if gem_version.is_a?(Hash)
-      resource_config.merge!('version' => gem_version) if gem_version.is_a?(String) && !gem_version.blank?
-
-      ruby_rvm_gem "rvm:gem:#{username}:#{gemset}:#{resource_config['name']}" do
-        ruby_string gemset
+    gems.each do |gem_name|
+      resource_config = gem_name.is_a?(Hash) ? gem_name : { 'gem' => gem_name }
+      chef_rvm_gem "rvm:gem:#{username}:#{ruby_string}:#{resource_config['gem']}" do
         user username
+        ruby_string ruby_string
         gem resource_config['gem']
         version resource_config['version'] if resource_config['version']
         action resource_config['action'] if resource_config['action']
       end
     end
-  end if rvm_settings['gems']
+  end if rvm['gems']
 end

@@ -1,16 +1,15 @@
-class RvmCookbook
+require_relative 'rvm_provider_mixin'
+
+class ChefRvmCookbook
   module ExecuteProviderMixin
-    def rvm
-      @env ||= ::RvmCookbook::ShellHelper.new(new_resource.user, new_resource.ruby_string)
-    end
+    include ChefRvmCookbook::RvmProviderMixin
 
     def shell_out!(*args)
-      arguments = rvm.shell_out_args(*args)
-      Chef::Log.debug "Call: #{arguments.join(', ')}"
-      r = super(*arguments)
-      Chef::Log.debug "STDOUT: #{r.stdout.to_s.strip}"
-      Chef::Log.debug "STDERR: #{r.stderr}" unless r.stderr.to_s.empty?
-      r
+      if new_resource.ruby_string
+        rvm.rvm_execute!(new_resource.ruby_string, *args)
+      else
+        super(*args)
+      end
     end
   end
 end

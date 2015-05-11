@@ -1,6 +1,4 @@
-include RvmCookbook::Helpers
-
-actions :install, :remove, :uninstall
+actions :install, :remove, :uninstall, :reinstall
 default_action :install
 
 attribute :user, kind_of: [String], default: 'root'

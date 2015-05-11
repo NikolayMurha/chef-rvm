@@ -1,4 +1,4 @@
-actions :create, :update
+actions :create, :create_or_update
 default_action :create
 
 attribute :prefix, :kind_of => String
