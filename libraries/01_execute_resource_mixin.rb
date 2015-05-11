@@ -1,11 +1,11 @@
-class RvmCookbook
+class ChefRvmCookbook
   module ExecuteResourceMixin
     module ClassMethods
       def set_guard_inherited_attributes(*inherited_attributes)
         @class_inherited_attributes = inherited_attributes
       end
 
-      def guard_inherited_attributes(*_inherited_attributes)
+      def guard_inherited_attributes(*_)
         # Similar to patterns elsewhere, return attributes from this
         # class and superclasses as a form of inheritance
         ancestor_attributes = []
@@ -22,7 +22,8 @@ class RvmCookbook
         set_or_return(
           :ruby_string,
           arg,
-          :kind_of => [String]
+          :kind_of => [String],
+          :default => true
         )
       end
     end

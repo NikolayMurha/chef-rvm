@@ -1,5 +1,3 @@
-include RvmCookbook::Helpers
-
 actions :install, :uninstall, :update
 default_action :install
 

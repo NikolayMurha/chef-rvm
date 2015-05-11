@@ -1,7 +1,7 @@
 class Chef
   class Provider
-    class RubyRvmExecute < Chef::Provider::Execute
-      include ::RvmCookbook::ExecuteProviderMixin
+    class ChefRvmExecute < Chef::Provider::Execute
+      include ::ChefRvmCookbook::ExecuteProviderMixin
     end
   end
 end
