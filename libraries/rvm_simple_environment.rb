@@ -6,35 +6,6 @@ require_relative 'rvm_simple_environment/gemset'
 require_relative 'rvm_simple_environment/gem'
 require_relative 'rvm_simple_environment/alias'
 
-# rvm = RvmSimpleEnvironment.new({ :user => 'ubuntu', use: '' })
-# rvm.use('2.0.0') # set default ruby_string
-# If you skip ruby_string in commands, default ruby string will be used
-# rvm.do('ruby --version')
-# rvm.in(direcotry)
-#
-# rvm.gemset?('2.0.0@iptables-web')
-# rvm.gemset_create('2.0.0@iptables-web')
-# rvm.gemset_delete('2.2.0@iptables-web')
-#
-# rvm.ruby?('2.0.0')
-# rvm.ruby_install('2.0.0')
-# rvm.ruby_remove('2.0.0')
-#
-# rvm.gem?('2.0.0@default', 'eye', '0.6.4')
-# rvm.gem_install('2.0.0')
-# rvm.gem_uninstall('2.0.0')
-#
-# rvm.alias?('my_alias')
-# rvm.alias_create('2.0.0@default', 'myalias')
-# rvm.alias_delete('myalias')
-# rvm.shell_out()
-#
-# # exceptions
-# RvmEnvitonment::RvmDidNotInstalled
-# RvmEnvitonment::RubyDidNotInstalled
-# RvmEnvitonment::GemsetDoNotExist
-
-
 class ChefRvmCookbook
   class RvmSimpleEnvironment
     include Chef::Mixin::ShellOut
@@ -42,29 +13,14 @@ class ChefRvmCookbook
     attr_accessor :options
     attr_accessor :user
 
-    def initialize(*args)
-      self.options = extract_options(args)
-      self.user = args[0]
+    def initialize(user, options={})
+      self.options = options
+      self.user = user
       raise UserRequired.new unless user
-      self.ruby_string = args[1]
     end
 
-    def ruby_string=(ruby_string)
-      return unless ruby_string
-      @ruby_string = RubyString[ruby_string]
-    end
-
-    alias_method :use, :ruby_string=
-
-    def ruby_string(ruby_string=nil)
-      ruby_string = RubyString.fetch(ruby_string) if ruby_string.is_a?(Array)
-      ruby_string = if @ruby_string
-        @ruby_string.merge(ruby_string)
-      else
-        RubyString[ruby_string]
-      end
-      raise 'Ruby string not is not defined. You need define a default ruby_string.' unless ruby_string
-      ruby_string
+    def ruby_string(ruby_string)
+      RubyString[ruby_string]
     end
 
     def shell_out(*args)
@@ -94,18 +50,18 @@ class ChefRvmCookbook
     end
 
     def merged_options(options)
-      opts = self.shell_options.merge(options)
-      opts[:env] = (options[:env] || {}).merge(self.shell_options[:env])
+      opts = shell_options.merge(options)
+      opts[:env] = (options[:env] || {}).merge(shell_options[:env])
       opts
     end
 
     def env
       env ||= {}
-      env.merge!({
-          'USER' => user,
-          'HOME' => user_home,
-          'rvm_path' => rvm_path
-        }) if user
+      env.merge!(
+                   'USER' => user,
+                   'HOME' => user_home,
+                   'rvm_path' => rvm_path
+                 ) if user
       env
     end
 

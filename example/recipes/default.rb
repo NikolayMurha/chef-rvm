@@ -94,4 +94,3 @@ CODE
   action :run
   not_if 'bundle check'
 end
-

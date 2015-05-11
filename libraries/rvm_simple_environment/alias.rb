@@ -4,7 +4,7 @@ class ChefRvmCookbook
       alias_list.keys.include?(name)
     end
 
-    def alias_create(name, ruby_string=nil)
+    def alias_create(name,  ruby_string)
       ruby_string = ruby_string(ruby_string)
       check_gemset!(ruby_string)
       rvm!(:alias, :create, name, ruby_string)
@@ -17,7 +17,7 @@ class ChefRvmCookbook
     def alias_list
       rvm!('alias list').stdout.split("\n").each_with_object({}) do |item, obj|
         m = item.match(/(.*)=>(.*)/)
-        obj[m[1].strip]=m[2].strip if m
+        obj[m[1].strip] = m[2].strip if m
       end
     end
   end

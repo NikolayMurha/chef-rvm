@@ -26,7 +26,10 @@ depends 'chef_gem'
 depends 'gpg'
 
 # if using jruby, java is required on system
-recommends 'java'
+recommends 'java' # For jruby
+recommends 'maven' # For jruby
+recommends 'nodejs' # for opal
+recommends 'mono' # for ironruby
 
 # for installing on OSX, this is required for installation and compilation
 suggests 'homebrew'

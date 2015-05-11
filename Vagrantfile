@@ -87,6 +87,11 @@ Vagrant.configure("2") do |config|
             rubies: {
               '1.9.3' => { action: 'install', patch: 'falcon' },
               '2.0' => 'install',
+              'opal' => {},
+              'jruby' => {},
+              'rbx' => {},
+              'mruby' => {},
+              'opal' => {},
             },
             gems: {
               '1.9.3@eye_unicorn' => %w(eye unicorn),
@@ -119,7 +124,13 @@ Vagrant.configure("2") do |config|
         }
       }
     }
-    chef.run_list = %w(chef_rvm_example::user chef_rvm::default)
+    chef.run_list = %w(
+        java::default
+        maven::default
+        nodejs::default
+        chef_rvm_example::user
+        chef_rvm::default
+      )
   end
 
   config.vm.provider :aws do |aws, override|

@@ -5,7 +5,6 @@ def whyrun_supported?
   true
 end
 
-
 action :install do
   unless rvm.gemset?(new_resource.ruby_string)
     Chef::Log.debug('Create gemset before installing gem')

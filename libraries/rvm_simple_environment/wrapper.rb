@@ -4,7 +4,7 @@ class ChefRvmCookbook
       ::File.exist?(wrapper_file(prefix, binary))
     end
 
-    def wrapper_create(ruby_string=nil, prefix, binary)
+    def wrapper_create(ruby_string, prefix, binary)
       check_gemset!(ruby_string)
       rvm!(:wrapper, ruby_string, prefix, binary)
     end

@@ -21,15 +21,15 @@ class ChefRvmCookbook
       shell_out!('echo yes | rvm', ruby_string.version, :do, :rvm, :gemset, :delete, ruby_string.gemset)
     end
 
-    def _gemset_ruby_string(*args)
-      ruby_string = args.compact.join('@')
-      # return self.ruby_string if ruby_string.empty?
-      self.ruby_string(ruby_string)
+    def _gemset_ruby_string(ruby_string, gemset=nil)
+      ruby_string = self.ruby_string(ruby_string)
+      ruby_string.gemset = gemset if gemset
+      ruby_string
     end
 
     def check_gemset!(ruby_string)
       check_ruby!(ruby_string)
-      raise GemsetDoes unless gemset?(ruby_string)
+      raise GemsetDoesNotExist unless gemset?(ruby_string)
     end
   end
 end

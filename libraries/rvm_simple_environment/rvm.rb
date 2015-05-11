@@ -15,8 +15,7 @@ class ChefRvmCookbook
     end
 
     def do(*args)
-      ruby_string = self.ruby_string(RubyString.fetch(args))
-      rvm(ruby_string, :do, *args)
+      rvm(ruby_string(args.slice!(0)), :do, *args)
     end
 
     def do!(*args)
@@ -26,12 +25,11 @@ class ChefRvmCookbook
     end
 
     def rvm_execute(*args)
-      ruby_string = self.ruby_string(RubyString.fetch(args))
-      shell_out("rvm use #{ruby_string};", *args)
+      shell_out("rvm use #{ruby_string(args.slice!(0))};", *args)
     end
 
     def rvm_execute!(*args)
-      cmd = self.rvm_execute(*args)
+      cmd = rvm_execute(*args)
       cmd.error!
       cmd
     end
@@ -47,7 +45,7 @@ class ChefRvmCookbook
       shell_out!('echo yes | rvm implode')
     end
 
-    def rvm_get(version=:stable)
+    def rvm_get(version = :stable)
       rvm!(:get, version)
     end
 
