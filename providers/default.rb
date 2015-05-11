@@ -8,6 +8,7 @@ action :install do
   end
 
   new_resource.rubies.each do |ruby_string, options|
+    options ||= {}
     chef_rvm_ruby "#{new_resource.user}:#{ruby_string}" do
       user new_resource.user
       version ruby_string
