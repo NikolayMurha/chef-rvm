@@ -29,7 +29,7 @@ class ChefRvmCookbook
     end
 
     def head?
-      self.ruby_string =~ /head$/
+      ruby_string =~ /head$/
     end
 
     def merge(ruby_string)

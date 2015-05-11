@@ -13,10 +13,10 @@ class ChefRvmCookbook
     attr_accessor :options
     attr_accessor :user
 
-    def initialize(user, options={})
+    def initialize(user, options = {})
       self.options = options
       self.user = user
-      raise UserRequired.new unless user
+      raise RvmUserRequired unless user
     end
 
     def ruby_string(ruby_string)
@@ -42,7 +42,7 @@ class ChefRvmCookbook
     end
 
     def shell(*args)
-      raise RvmDoesNotInstalled.new unless rvm?
+      check_rvm!
       options = extract_options(args)
       cmd = args.flatten.join(' ')
       cmd = "source #{rvm_path}/scripts/rvm; #{cmd}"
@@ -82,7 +82,7 @@ class ChefRvmCookbook
     end
   end
 
-  class UserRequired < ::Exception
+  class RvmUserRequired < ::Exception
   end
 
   class RvmDoesNotInstalled < ::Exception
@@ -97,7 +97,7 @@ class ChefRvmCookbook
     end
   end
 
-  class GemsetDoesNotExist < ::Exception
+  class RvmGemsetDoesNotExist < ::Exception
     attr_accessor :ruby_version
     attr_accessor :gemset
   end

@@ -19,16 +19,16 @@ class ChefRvmCookbook
     def requirements_install(ruby_string)
       ruby_string = RubyString[ruby_string]
       pkgs = if ruby_string.version.to_s =~ /^jruby/
-        return if Cache.get('jruby')
-        Cache.set('jruby', 1)
-        jruby_requirements
-      elsif ruby_string.version.to_s =~ /^opal/
-        Cache.set('opal', 1)
-        opal_requirements
-      else
-        Cache.set('ruby', 1)
-        ruby_requirements(ruby_string)
-      end
+               return if Cache.get('jruby')
+               Cache.set('jruby', 1)
+               jruby_requirements
+             elsif ruby_string.version.to_s =~ /^opal/
+               Cache.set('opal', 1)
+               opal_requirements
+             else
+               Cache.set('ruby', 1)
+               ruby_requirements(ruby_string)
+             end
 
       Chef::Log.debug("Install ruby requirements for version #{ruby_string.version}")
       pkgs.each do |pkg|
@@ -62,21 +62,21 @@ class ChefRvmCookbook
       pkgs = value_for_platform(
         %w(debian ubuntu) => {
           'default' => %w(build-essential openssl libreadline6 libreadline6-dev
-                        zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev
-                        sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev gawk ncurses-dev
-                        automake libtool bison ssl-cert pkg-config libgdbm-dev libffi-dev clang llvm llvm-dev libedit-dev)
+                          zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev
+                          sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev gawk ncurses-dev
+                          automake libtool bison ssl-cert pkg-config libgdbm-dev libffi-dev clang llvm llvm-dev libedit-dev)
         },
 
         'suse' => {
           'default' => %w(gcc-c++ patch zlib zlib-devel libffi-devel
-                        sqlite3-devel libxml2-devel libxslt-devel readline-devel llvm llvm-clang llvm-devel)
+                          sqlite3-devel libxml2-devel libxslt-devel readline-devel llvm llvm-clang llvm-devel)
         },
 
         %w(centos redhat fedora scientific amazon) => {
           'default' => %w(gcc-c++ patch readline readline-devel zlib zlib-devel
-                        libyaml-devel libffi-devel openssl-devel
-                        make bzip2 autoconf automake libtool bison
-                        libxml2 libxml2-devel libxslt libxslt-devel)
+                          libyaml-devel libffi-devel openssl-devel
+                          make bzip2 autoconf automake libtool bison
+                          libxml2 libxml2-devel libxslt libxslt-devel)
         },
 
         'gentoo' => {
@@ -92,7 +92,6 @@ class ChefRvmCookbook
         },
         'default' => []
       )
-
 
       pkgs += value_for_platform(
         %w(debian ubuntu) => %w(subversion),

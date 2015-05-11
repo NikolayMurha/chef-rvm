@@ -11,7 +11,7 @@ class ChefRvmCookbook
       ruby_string = ruby_string(ruby_string)
       cmd = "install #{ruby_string.version}"
       cmd << " --patch #{patch}"
-      rvm!(:install, ruby_string.version, {timeout: 1000})
+      rvm!(:install, ruby_string.version, timeout: 1000)
     end
 
     def ruby_set_default(ruby_string = nil)

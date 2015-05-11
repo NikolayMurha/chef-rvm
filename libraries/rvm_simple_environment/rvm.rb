@@ -50,7 +50,7 @@ class ChefRvmCookbook
     end
 
     def check_rvm!
-      raise RvmDoesNotInstalled.new unless rvm?
+      raise RvmDoesNotInstalled unless rvm?
     end
 
     alias_method :get, :rvm_get
