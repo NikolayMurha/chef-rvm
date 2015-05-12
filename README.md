@@ -1,6 +1,6 @@
 # chef_rvm
 
-## Alternative LWRP's based rvm cookbook
+## LWRP's based rvm cookbook
 #### Inspired by [RVM](https://github.com/martinisoft/chef-rvm/) cookbook
 
 [![Code Climate](https://codeclimate.com/github/MurgaNikolay/chef-rvm/badges/gpa.svg)](https://codeclimate.com/github/MurgaNikolay/chef-rvm)
