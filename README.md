@@ -1,11 +1,11 @@
 # chef_rvm
 
 ## LWRP's based rvm cookbook
-#### Inspired by [RVM](https://github.com/martinisoft/chef-rvm/) cookbook
 
 [![Code Climate](https://codeclimate.com/github/MurgaNikolay/chef-rvm/badges/gpa.svg)](https://codeclimate.com/github/MurgaNikolay/chef-rvm)
 [![Build Status](https://travis-ci.org/MurgaNikolay/chef-rvm.svg?branch=master)](https://travis-ci.org/MurgaNikolay/chef-rvm)
 
+#### Inspired by [RVM](https://github.com/martinisoft/chef-rvm/) cookbook
 ### Supported chef-client version:
 
 Chef-Client >= 11.12.0
