@@ -7,15 +7,19 @@ action :install do
     new_resource.updated_by_last_action(true)
   end
 
-  new_resource.rubies.each do |ruby_string, options|
-    options ||= {}
-    chef_rvm_ruby "#{new_resource.user}:#{ruby_string}" do
-      user new_resource.user
-      version ruby_string
-      patch options['patch']
-      default options['default']
+  rubies = new_resource.rubies
+  if rubies
+    rubies = Array(rubies) if rubies.is_a?(String)
+    rubies.each do |ruby_string, options|
+      options ||= {}
+      chef_rvm_ruby "#{new_resource.user}:#{ruby_string}" do
+        user new_resource.user
+        version ruby_string
+        patch options['patch']
+        default options['default']
+      end
     end
-  end if new_resource.rubies
+  end
   create_or_update_rvmvc
 end
 
