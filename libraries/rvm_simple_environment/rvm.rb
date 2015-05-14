@@ -36,21 +36,11 @@ class ChefRvmCookbook
       end
 
       def rvm_install
-        puts '--------------------------------------'
-        puts shell_options
         cmd = parent_shell_out('gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3', shell_options)
-        puts cmd.inspect
-        puts cmd.stdout
-        puts cmd.stderr
         cmd.error!
 
         cmd = parent_shell_out('\curl -sSL https://get.rvm.io | bash -s stable --auto-dotfiles', shell_options)
-        puts cmd.status
-        puts cmd.stdout
-        puts cmd.stderr
         cmd.error!
-        puts '--------------------------------------'
-
         cmd
       end
 

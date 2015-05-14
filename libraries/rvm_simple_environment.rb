@@ -33,8 +33,12 @@ class ChefRvmCookbook
 
     def shell_out(*args)
       command = *shell(*args)
-      Chef::Log.debug("RVM Execute: \"#{command[0]}\" with options #{command[1]}") if options[:verbose]
-      parent_shell_out(*command)
+      resp = parent_shell_out(*command)
+      if options[:verbose]
+        Chef::Log.debug("RVM Execute STDOUT: #{resp.stdout}")
+        Chef::Log.debug("RVM Execute STDERR: #{resp.stderr}")
+      end
+      resp
     end
 
     def shell_options
