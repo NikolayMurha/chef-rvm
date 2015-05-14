@@ -53,7 +53,7 @@ class ChefRvmCookbook
       end
 
       def check_rvm!
-        raise RvmDoesNotInstalled unless rvm?
+        raise RvmDoesNotInstalled, "Rvm is not installed for user #{user}!" unless rvm?
       end
 
       alias_method :get, :rvm_get
