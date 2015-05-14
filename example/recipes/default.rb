@@ -17,6 +17,7 @@ EOF
 end
 
 chef_rvm 'ubuntu' do
+  rubies ['2.1']
   action :install
 end
 

@@ -5,11 +5,19 @@ require_relative 'rvm_simple_environment/ruby'
 require_relative 'rvm_simple_environment/gemset'
 require_relative 'rvm_simple_environment/gem'
 require_relative 'rvm_simple_environment/alias'
+require_relative 'rvm_simple_environment/wrapper'
 
 class ChefRvmCookbook
   class RvmSimpleEnvironment
     include Chef::Mixin::ShellOut
     alias_method :parent_shell_out, :shell_out
+    include Rvm
+    include Ruby
+    include Gemset
+    include Gem
+    include Alias
+    include Wrapper
+
     attr_accessor :options
     attr_accessor :user
 
@@ -26,19 +34,19 @@ class ChefRvmCookbook
     def shell_out(*args)
       command = *shell(*args)
       Chef::Log.debug("RVM Execute: \"#{command[0]}\" with options #{command[1]}") if options[:verbose]
-      resp = parent_shell_out(*command)
-      if options[:verbose]
-        Chef::Log.debug("RVM Execute STDOUT: #{resp.stdout}")
-        Chef::Log.debug("RVM Execute STDERR: #{resp.stderr}")
-      end
-      resp
+      parent_shell_out(*command)
     end
 
     def shell_options
-      {
+      opts = {
         user: user,
         env: env
       }
+      opts.merge!(
+                    log_level: :debug,
+                    logger: Chef::Log
+                  ) if options[:verbose]
+      opts
     end
 
     def shell(*args)
@@ -56,12 +64,12 @@ class ChefRvmCookbook
     end
 
     def env
-      env ||= {}
+      env = {}
       env.merge!(
-                   'USER' => user,
-                   'HOME' => user_home,
-                   'rvm_path' => rvm_path
-                 ) if user
+        'USER' => user,
+        'HOME' => user_home,
+        'rvm_path' => rvm_path
+      ) if user
       env
     end
 
