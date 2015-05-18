@@ -80,56 +80,58 @@ Vagrant.configure("2") do |config|
       apt: {
         compile_time_update: true
       },
-      chef_rvm: {
-        # verbose: true,
-        users: {
-          ubuntu: {
-            rubies: {
-              '1.9.3' => { action: 'install', patch: 'falcon' },
-              '2.0' => 'install',
-              'opal' => {},
-              'jruby' => {},
-              'rbx' => {},
-              'mruby' => {},
-              'opal' => {},
-            },
-            gems: {
-              '1.9.3@eye_unicorn' => %w(eye unicorn),
-              '1.9.3@eye' => [
-                { gem: 'eye', version: '0.6', action: 'install' }
-              ],
-              '1.9.3@unicorn' => 'unicorn',
-            },
-            wrappers: {
-              :'1.9.3@eye' => {
-                bootup: [
-                  {
-                    binary: 'eye',
-                    action: 'create_or_update'
-                  }
-                ]
-              },
-              :'1.9.3@eye_unicorn' => {
-                bootup: %w(eye unicorn)
-              },
-              :'1.9.3@unicorn' => {
-                bootup: 'unicorn'
-              }
-            },
-            aliases: {
-              'my_alias_200' => '2.0.0',
-              'my_alias_193' => '1.9.3@eye_unicorn'
-            }
-          }
-        }
-      }
+      # chef_rvm: {
+      #   # verbose: true,
+      #   users: {
+      #     ubuntu: {
+      #       rubies: {
+      #         '1.9.3' => { action: 'install', patch: 'falcon' },
+      #         '2.0' => 'install',
+      #         'opal' => {},
+      #         'jruby' => {},
+      #         'rbx' => {},
+      #         'mruby' => {},
+      #         'opal' => {},
+      #       },
+      #       gems: {
+      #         '1.9.3@eye_unicorn' => %w(eye unicorn),
+      #         '1.9.3@eye' => [
+      #           { gem: 'eye', version: '0.6', action: 'install' }
+      #         ],
+      #         '1.9.3@unicorn' => 'unicorn',
+      #       },
+      #       wrappers: {
+      #         :'1.9.3@eye' => {
+      #           bootup: [
+      #             {
+      #               binary: 'eye',
+      #               action: 'create_or_update'
+      #             }
+      #           ]
+      #         },
+      #         :'1.9.3@eye_unicorn' => {
+      #           bootup: %w(eye unicorn)
+      #         },
+      #         :'1.9.3@unicorn' => {
+      #           bootup: 'unicorn'
+      #         }
+      #       },
+      #       aliases: {
+      #         'my_alias_200' => '2.0.0',
+      #         'my_alias_193' => '1.9.3@eye_unicorn'
+      #       }
+      #     }
+      #   }
+      # }
     }
+
+    # java::default
+    # maven::default
+    # nodejs::default
+    # chef_rvm_example::user
+    # chef_rvm::default
     chef.run_list = %w(
-        java::default
-        maven::default
-        nodejs::default
-        chef_rvm_example::user
-        chef_rvm::default
+        chef_rvm_example::default
       )
   end
 

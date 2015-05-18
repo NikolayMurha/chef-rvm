@@ -126,7 +126,7 @@ GEM
     rufus-lru (1.0.5)
     safe_yaml (1.0.4)
     slop (3.6.0)
-    stove (3.2.4)
+    stove (3.2.7)
       chef-api (~> 0.5)
       logify (~> 0.2)
     systemu (2.6.4)
