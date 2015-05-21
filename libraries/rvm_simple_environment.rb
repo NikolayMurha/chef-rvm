@@ -1,11 +1,12 @@
 require 'shellwords'
 require_relative 'ruby_string'
-require_relative 'rvm_simple_environment/rvm'
-require_relative 'rvm_simple_environment/ruby'
-require_relative 'rvm_simple_environment/gemset'
-require_relative 'rvm_simple_environment/gem'
-require_relative 'rvm_simple_environment/alias'
-require_relative 'rvm_simple_environment/wrapper'
+
+require_relative 'rvm_simple_environment_rvm'
+require_relative 'rvm_simple_environment_ruby'
+require_relative 'rvm_simple_environment_gemset'
+require_relative 'rvm_simple_environment_gem'
+require_relative 'rvm_simple_environment_alias'
+require_relative 'rvm_simple_environment_wrapper'
 
 class ChefRvmCookbook
   class RvmSimpleEnvironment
