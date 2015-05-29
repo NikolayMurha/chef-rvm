@@ -45,12 +45,12 @@ class ChefRvmCookbook
     def shell_options
       opts = {
         user: user,
-        env: env
+        environment: env
       }
       opts.merge!(
-                    log_level: :debug,
-                    logger: Chef::Log
-                  ) if options[:verbose]
+        log_level: :debug,
+        logger: Chef::Log
+      ) if options[:verbose]
       opts
     end
 
@@ -64,7 +64,10 @@ class ChefRvmCookbook
 
     def merged_options(options)
       opts = shell_options.merge(options)
-      opts[:env] = (options[:env] || {}).merge(shell_options[:env])
+      opts[:environment] = (options[:environment] || {})
+        .merge(options[:env] || {})
+        .merge(shell_options[:environment])
+      opts.delete(:env)
       opts
     end
 
