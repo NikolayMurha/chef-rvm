@@ -1,3 +1,4 @@
+require 'tempfile'
 class ChefRvmCookbook
   class RvmSimpleEnvironment
     module Rvm
@@ -39,9 +40,14 @@ class ChefRvmCookbook
         cmd = parent_shell_out('gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3', shell_options)
         cmd.error!
 
-        cmd = parent_shell_out('\curl -sSL https://get.rvm.io | bash -s stable --auto-dotfiles', shell_options)
-        cmd.error!
-        cmd
+        temp_file = Tempfile.new('foo')
+        begin
+          parent_shell_out("curl -sSL https://get.rvm.io > #{temp_file.path}", shell_options).error!
+          parent_shell_out("bash #{temp_file.path} -s stable --auto-dotfiles", shell_options).error!
+        ensure
+          file.close
+          file.unlink
+        end
       end
 
       def rvm_implode

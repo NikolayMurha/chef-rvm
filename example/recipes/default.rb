@@ -73,6 +73,15 @@ chef_rvm_execute 'bundle install' do
   action :run
 end
 
+chef_rvm_execute 'bundle install' do
+  ruby_string '2.0.0'
+  user 'ubuntu'
+  cwd '/home/ubuntu/test'
+  command 'bundle install'
+  only_if 'bundle check'
+  action :run
+end
+
 chef_rvm_script 'bundle_install_sh' do
   interpreter 'sh'
   ruby_string '2.0.0'

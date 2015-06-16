@@ -1,9 +1,8 @@
 include ChefRvmCookbook::RvmProviderMixin
-# use_inline_resources
+use_inline_resources
 action :install do
   unless rvm.rvm?
     rvm.rvm_install
-    # We will have exception on errors, when we set true without check result.
     new_resource.updated_by_last_action(true)
   end
 
