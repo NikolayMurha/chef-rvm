@@ -42,11 +42,12 @@ class ChefRvmCookbook
 
         temp_file = Tempfile.new('foo')
         begin
-          parent_shell_out("curl -sSL https://get.rvm.io > #{temp_file.path}", shell_options).error!
-          parent_shell_out("bash #{temp_file.path} -s stable --auto-dotfiles", shell_options).error!
+          parent_shell_out("curl -sSL https://get.rvm.io > #{temp_file.path}").error!
+          parent_shell_out("chmod 0777 #{temp_file.path}").error!
+          parent_shell_out("bash #{temp_file.path} stable --auto-dotfiles", shell_options).error!
         ensure
-          file.close
-          file.unlink
+          temp_file.close
+          temp_file.unlink
         end
       end
 
