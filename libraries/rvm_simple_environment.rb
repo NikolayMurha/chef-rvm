@@ -56,6 +56,10 @@ class ChefRvmCookbook
 
     def shell(*args)
       check_rvm!
+      build_shell_args(*args)
+    end
+
+    def build_shell_args(*args)
       options = extract_options(args)
       cmd = args.flatten.join(' ')
       cmd = "source #{rvm_path}/scripts/rvm; #{cmd}"
