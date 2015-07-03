@@ -15,6 +15,7 @@ action :install do
     requirements_install(new_resource.version)
     Chef::Log.debug "Install ruby #{new_resource.version} for user #{new_resource.user}"
     rvm.ruby_install(new_resource.version, new_resource.patch)
+    rvm.gemset_create(new_resource.version)
     new_resource.updated_by_last_action(true)
   end
   rvm.ruby_set_default(new_resource.version) if new_resource.default
