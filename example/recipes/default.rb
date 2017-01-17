@@ -10,9 +10,8 @@ end
 file '/home/ubuntu/test/Gemfile' do
   content <<EOF
 source 'https://rubygems.org'
-gem 'rake'
-gem 'rails'
-gem 'nio4r', '>= 1.2.1'
+
+gem 'nio4r', '~> 1.2.1'
 gem 'eye'
 EOF
 end
