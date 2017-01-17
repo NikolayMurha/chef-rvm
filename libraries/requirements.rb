@@ -64,14 +64,14 @@ class ChefRvmCookbook
           'default' => %w(build-essential openssl libreadline6 libreadline6-dev
                           zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev
                           sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev gawk ncurses-dev
-                          automake libtool bison ssl-cert pkg-config libgdbm-dev libffi-dev clang llvm llvm-dev libedit-dev)
+                          automake libtool bison ssl-cert pkg-config libgdbm-dev libffi-dev clang llvm llvm-dev libedit-dev libgmp-dev
+                          patch ca-certificates curl libncurses5-dev)
         },
-
         'suse' => {
-          'default' => %w(gcc-c++ patch zlib zlib-devel libffi-devel
-                          sqlite3-devel libxml2-devel libxslt-devel readline-devel llvm llvm-clang llvm-devel)
+          'default' => %w( automake binutils bison bzip2 libtool m4 make patch gdbm-devel glibc-devel libffi-devel
+                  libopenssl-devel readline-devel zlib-devel sqlite3-devel
+                  gcc-c++ zlib libxml2-devel libxslt-devel llvm llvm-clang llvm-devel )
         },
-
         %w(centos redhat fedora scientific amazon) => {
           'default' => %w(gcc-c++ patch readline readline-devel zlib zlib-devel
                           libyaml-devel libffi-devel openssl-devel
@@ -87,7 +87,8 @@ class ChefRvmCookbook
 
       pkgs += value_for_platform(
         'suse' => {
-          '>= 11.0' => %w(libreadline5 libopenssl-devel),
+          '>= 12.0' => %w(libreadline5 libopenssl-devel libdb-4_8),
+          '>= 11.0' => %w(libreadline5 libopenssl-devel libdb-4_5),
           'default' => %w(readline openssl-devel)
         },
         'default' => []
