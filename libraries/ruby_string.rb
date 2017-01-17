@@ -1,55 +1,56 @@
 class ChefRvmCookbook
-  class RubyString
-    attr_accessor :version
-    attr_accessor :gemset
-    attr_accessor :ruby_string
+  unless const_defined? 'RubyString'
+    class RubyString
+      attr_accessor :version
+      attr_accessor :gemset
+      attr_accessor :ruby_string
 
-    RUBY_VERSIONS = %w(system)
+      RUBY_VERSIONS = %w(system)
 
-    def initialize(ruby_string = nil)
-      self.ruby_string = ruby_string if ruby_string
-    end
+      def initialize(ruby_string = nil)
+        self.ruby_string = ruby_string if ruby_string
+      end
 
-    def ruby_string=(ruby_string)
-      @ruby_string = ruby_string.to_s
-      self.version, self.gemset = self.ruby_string.split('@')
-    end
+      def ruby_string=(ruby_string)
+        @ruby_string = ruby_string.to_s
+        self.version, self.gemset = self.ruby_string.split('@')
+      end
 
-    def gemset(default = 'default')
-      @gemset || default
-    end
+      def gemset(default = 'default')
+        @gemset || default
+      end
 
-    def version(default = 'system')
-      @version || default
-    end
+      def version(default = 'system')
+        @version || default
+      end
 
-    def to_s
-      return version if version == 'system'
-      "#{version}@#{gemset}"
-    end
+      def to_s
+        return version if version == 'system'
+        "#{version}@#{gemset}"
+      end
 
-    def head?
-      ruby_string =~ /head$/
-    end
+      def head?
+        ruby_string =~ /head$/
+      end
 
-    def merge(ruby_string)
-      rb = RubyString[ruby_string]
-      rb.version = rb.version(version)
-      rb.gemset = rb.gemset(gemset)
-      rb
-    end
+      def merge(ruby_string)
+        rb = RubyString[ruby_string]
+        rb.version = rb.version(version)
+        rb.gemset = rb.gemset(gemset)
+        rb
+      end
 
-    alias_method :+, :merge
+      alias_method :+, :merge
 
-    class << self
-      def [](ruby_string)
-        return ruby_string if ruby_string.is_a?(RubyString)
-        new(ruby_string)
+      class << self
+        def [](ruby_string)
+          return ruby_string if ruby_string.is_a?(RubyString)
+          new(ruby_string)
+        end
       end
     end
   end
 end
-
 =begin
 # MRI Rubies
 [ruby-]1.8.6[-p420]

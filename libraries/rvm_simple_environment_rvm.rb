@@ -37,7 +37,7 @@ class ChefRvmCookbook
       end
 
       def rvm_install
-        cmd = parent_shell_out('gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3', shell_options)
+        cmd = parent_shell_out("gpg --keyserver #{options[:keyserver] || 'hkp://keyserver.ubuntu.com'} --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3", shell_options)
         cmd.error!
 
         temp_file = Tempfile.new('foo')
@@ -45,6 +45,7 @@ class ChefRvmCookbook
           parent_shell_out("curl -sSL https://get.rvm.io > #{temp_file.path}").error!
           parent_shell_out("chmod 0777 #{temp_file.path}").error!
           parent_shell_out("bash #{temp_file.path} stable --auto-dotfiles", shell_options).error!
+          rvm('autolibs read-fail')
         ensure
           temp_file.close
           temp_file.unlink

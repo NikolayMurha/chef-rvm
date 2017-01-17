@@ -9,10 +9,9 @@ Vagrant.configure("2") do |config|
     puts "Remove 'synced_folders' file"
     `rm .vagrant/machines/default/virtualbox/synced_folders`
   end
-  config.vm.hostname = "rvm-berkshelf"
-
+  # config.vm.hostname = "rvm-berkshelf"
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = 'chef/ubuntu-14.04'
+  config.vm.box = 'bento/ubuntu-14.04'
   # config.omnibus.chef_version = :latest
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
@@ -72,7 +71,9 @@ Vagrant.configure("2") do |config|
   # config.berkshelf.except = []
 
   config.vm.provision :chef_zero do |chef|
-    chef.log_level = :debug
+    chef.log_level = :info
+    chef.nodes_path = '.vagrant/nodes'
+
     chef.json = {
       :'build-essential' => {
         compile_time: true

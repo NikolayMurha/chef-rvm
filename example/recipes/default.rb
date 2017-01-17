@@ -12,6 +12,7 @@ file '/home/ubuntu/test/Gemfile' do
 source 'https://rubygems.org'
 gem 'rake'
 gem 'rails'
+gem 'nio4r', '>= 1.2.1'
 gem 'eye'
 EOF
 end
@@ -37,18 +38,24 @@ chef_rvm_gemset 'ubuntu:gemset:2.0.0' do
   ruby_string '2.0.0@test'
 end
 
+chef_rvm_gem 'ubuntu:gem:2.0.0@test:nio4r' do
+  user 'ubuntu'
+  ruby_string '2.0.0@test'
+  gem 'nio4r'
+  version '1.2.1'
+end
+
 chef_rvm_gem 'ubuntu:gem:2.0.0@test:eye' do
   user 'ubuntu'
   ruby_string '2.0.0@test'
   gem 'eye'
-  version '0.6.4'
 end
 
-chef_rvm_gem 'ubuntu:2.0.0@test:eye:0.6.4' do
+chef_rvm_gem 'ubuntu:2.0.0@test:eye:0.8.1' do
   user 'ubuntu'
   ruby_string '2.0.0@test'
   gem 'eye'
-  version '0.6.3'
+  version '0.8.1'
 end
 
 chef_rvm_wrapper 'ubuntu:wrapper:prefix_eye' do
@@ -56,6 +63,12 @@ chef_rvm_wrapper 'ubuntu:wrapper:prefix_eye' do
   ruby_string '2.0.0@test'
   prefix 'prefix'
   binary 'eye'
+end
+
+chef_rvm_gem 'ubuntu:1.9.3:cucumber' do
+  user 'ubuntu'
+  ruby_string '1.9.3'
+  gem 'cucumber'
 end
 
 chef_rvm_gem 'ubuntu:2.0.0:bundler' do
