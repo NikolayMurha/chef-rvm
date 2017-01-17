@@ -32,6 +32,8 @@ AccessorMethodName:
   Enabled: false
 Style/FrozenStringLiteralComment:
   Enabled: false
+Style/SafeNavigation:
+  Enabled: false
 Metrics/AbcSize:
   Max: 30
 Metrics/CyclomaticComplexity:
