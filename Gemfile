@@ -1,11 +1,12 @@
+# frozen_string_literal: true
 source 'https://rubygems.org'
-
-gem 'stove'
 gem 'chef'
+gem 'rake', '< 11.0'
+gem 'stove'
 group :test do
+  gem 'chefspec', '~> 4.2.0'
   gem 'foodcritic', '~> 4.0'
   gem 'rubocop', '~> 0.0'
-  gem 'chefspec', '~> 4.2.0'
 end
 
 group :integration do

@@ -5,7 +5,7 @@ class ChefRvmCookbook
         alias_list.keys.include?(name)
       end
 
-      def alias_create(name,  ruby_string)
+      def alias_create(name, ruby_string)
         ruby_string = ruby_string(ruby_string)
         check_gemset!(ruby_string)
         rvm!(:alias, :create, name, ruby_string)

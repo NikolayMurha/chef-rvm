@@ -1,6 +1,7 @@
 include_recipe 'chef_rvm::rvm'
 
 node['chef_rvm']['users'].each do |username, rvm|
+  next unless rvm['gems']
   rvm['gems'].each do |ruby_string, gems|
     gems = Array(gems) if gems.is_a?(String)
     gems.each do |gem_name|
@@ -13,5 +14,5 @@ node['chef_rvm']['users'].each do |username, rvm|
         action resource_config['action'] if resource_config['action']
       end
     end
-  end if rvm['gems']
+  end
 end

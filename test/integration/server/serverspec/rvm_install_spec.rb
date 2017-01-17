@@ -10,5 +10,4 @@ RSpec.configure do |c|
 end
 
 describe 'Git Daemon' do
-
 end

@@ -6,7 +6,7 @@ node['chef_rvm']['users'].each do |username, rvm|
   ruby_strings |= rvm['aliases'].values if rvm['aliases']
   ruby_strings.uniq!
 
-  next if ruby_strings.size == 0
+  next if ruby_strings.empty?
   ruby_strings.each do |ruby_string|
     chef_rvm_gemset "#{username}:gemset:#{ruby_string}" do
       user username

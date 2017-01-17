@@ -11,7 +11,7 @@ require_relative 'rvm_simple_environment_wrapper'
 class ChefRvmCookbook
   class RvmSimpleEnvironment
     include Chef::Mixin::ShellOut
-    alias_method :parent_shell_out, :shell_out
+    alias parent_shell_out shell_out
     include Rvm
     include Ruby
     include Gemset
@@ -47,10 +47,10 @@ class ChefRvmCookbook
         user: user,
         environment: env
       }
-      opts.merge!(
-        log_level: :debug,
-        logger: Chef::Log
-      ) if options[:verbose]
+      if options[:verbose]
+        opts[:log_level] = :debug
+        opts[:logger] = Chef::Log
+      end
       opts
     end
 
@@ -69,19 +69,21 @@ class ChefRvmCookbook
     def merged_options(options)
       opts = shell_options.merge(options)
       opts[:environment] = (options[:environment] || {})
-        .merge(options[:env] || {})
-        .merge(shell_options[:environment])
+                           .merge(options[:env] || {})
+                           .merge(shell_options[:environment])
       opts.delete(:env)
       opts
     end
 
     def env
       env = {}
-      env.merge!(
-        'USER' => user,
-        'HOME' => user_home,
-        'rvm_path' => rvm_path
-      ) if user
+      if user
+        env.merge!(
+          'USER' => user,
+          'HOME' => user_home,
+          'rvm_path' => rvm_path
+        )
+      end
       env
     end
 
@@ -102,13 +104,13 @@ class ChefRvmCookbook
     end
   end
 
-  class RvmUserRequired < ::Exception
+  class RvmUserRequired < RuntimeError
   end
 
-  class RvmDoesNotInstalled < ::Exception
+  class RvmDoesNotInstalled < RuntimeError
   end
 
-  class RubyDoesNotInstalled < ::Exception
+  class RubyDoesNotInstalled < RuntimeError
     attr_accessor :ruby_version
 
     def initialize(message = '', ruby_version = nil)
@@ -117,7 +119,7 @@ class ChefRvmCookbook
     end
   end
 
-  class RvmGemsetDoesNotExist < ::Exception
+  class RvmGemsetDoesNotExist < RuntimeError
     attr_accessor :ruby_version
     attr_accessor :gemset
   end

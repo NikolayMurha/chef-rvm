@@ -22,13 +22,17 @@ MethodLength:
   Enabled: false
 SignalException:
   Enabled: false
-TrailingComma:
+TrailingCommaInLiteral:
+  Enabled: false
+TrailingCommaInArguments:
   Enabled: false
 WordArray:
   Enabled: false
 AccessorMethodName:
   Enabled: false
-
-Style/CyclomaticComplexity:
-  Max: 15
-
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Metrics/AbcSize:
+  Max: 30
+Metrics/CyclomaticComplexity:
+  Max: 30

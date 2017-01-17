@@ -1,5 +1,6 @@
 include_recipe 'chef_rvm::rvm'
 node['chef_rvm']['users'].each do |username, rvm|
+  next unless rvm['wrappers']
   rvm['wrappers'].each do |gemset, scopes|
     scopes.each do |scope, binaries|
       Array(binaries).each do |binary|
@@ -16,5 +17,5 @@ node['chef_rvm']['users'].each do |username, rvm|
         end
       end
     end
-  end if rvm['wrappers']
+  end
 end
