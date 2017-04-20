@@ -69,8 +69,8 @@ class ChefRvmCookbook
         },
         'suse' => {
           'default' => %w( automake binutils bison bzip2 libtool m4 make patch gdbm-devel glibc-devel libffi-devel
-                  libopenssl-devel readline-devel zlib-devel sqlite3-devel
-                  gcc-c++ zlib libxml2-devel libxslt-devel llvm llvm-clang llvm-devel )
+						   libopenssl-devel readline-devel zlib-devel sqlite3-devel
+						   gcc-c++ zlib libxml2-devel libxslt-devel llvm llvm-clang llvm-devel )
         },
         %w(centos redhat fedora scientific amazon) => {
           'default' => %w(gcc-c++ patch readline readline-devel zlib zlib-devel
