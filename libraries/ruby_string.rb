@@ -5,7 +5,7 @@ class ChefRvmCookbook
       attr_accessor :gemset
       attr_accessor :ruby_string
 
-      RUBY_VERSIONS = %w(system)
+      RUBY_VERSIONS = [%w(system)].freeze
 
       def initialize(ruby_string = nil)
         self.ruby_string = ruby_string if ruby_string
@@ -40,7 +40,7 @@ class ChefRvmCookbook
         rb
       end
 
-      alias_method :+, :merge
+      alias + merge
 
       class << self
         def [](ruby_string)

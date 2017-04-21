@@ -6,7 +6,7 @@ description 'Installs/Configures rvm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 # source_url 'https://github.com/MurgaNikolay/chef-rvm'
 # issues_url 'https://github.com/MurgaNikolay/chef-rvm/issues'
-version '1.1.1'
+version '2.0.0'
 
 recipe 'chef_rvm', 'Installs all'
 recipe 'chef_rvm::rvm', 'Installs the rvm for users'
@@ -30,6 +30,7 @@ recommends 'java' # For jruby
 recommends 'maven' # For jruby
 recommends 'nodejs' # for opal
 recommends 'mono' # for ironruby
+recommends 'homebrew' # for jruby
 
 # for installing on OSX, this is required for installation and compilation
-suggests 'homebrew'
+# suggests 'homebrew'

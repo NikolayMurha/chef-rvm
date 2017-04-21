@@ -61,9 +61,9 @@ class ChefRvmCookbook
         raise RvmDoesNotInstalled, "Rvm is not installed for user #{user}!" unless rvm?
       end
 
-      alias_method :get, :rvm_get
-      alias_method :install, :rvm_install
-      alias_method :implode, :rvm_implode
+      alias get rvm_get
+      alias install rvm_install
+      alias implode rvm_implode
     end
   end
 end

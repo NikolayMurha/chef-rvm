@@ -7,8 +7,8 @@ class Chef
         if Gem::Version.new(Chef::VERSION) < Gem::Version.new(::ChefRvmCookbook::MIN_SUPPORTED_VERSION)
           raise "Resource 'chef_rvm_script' is not supported by the Chef Client #{Chef::VERSION}. Please upgrade Chef Client to #{::ChefRvmCookbook::MIN_SUPPORTED_VERSION} or higher."
         end
-
         super
+        provider Chef::Provider::ChefRvmScript
         @resource_name = :chef_rvm_script
         @ruby_string = 'system'
         @guard_interpreter = :chef_rvm_script

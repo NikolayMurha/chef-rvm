@@ -9,17 +9,10 @@ class Chef
           raise "Resource 'chef_rvm_execute' is not supported by the Chef Client #{Chef::VERSION}. Please upgrade Chef Client to #{::ChefRvmCookbook::MIN_SUPPORTED_VERSION} or higher."
         end
         super
+        provider Chef::Provider::ChefRvmExecute
         @resource_name = :chef_rvm_execute
+        @guard_interpreter = :chef_rvm_execute
         @ruby_string = 'system'
-        # In chef >= 11.12.0 'execute' resource can not be as guard_interpreter
-        # Only 'script' resource or 'script' resource successors.
-        @guard_interpreter =
-          # Chef 12 can use execute resources as guard_interpreter
-          if Chef::Resource::Execute.respond_to?(:set_guard_inherited_attributes)
-            :chef_rvm_execute
-          else
-            :chef_rvm_bash
-          end
       end
 
       set_guard_inherited_attributes(
