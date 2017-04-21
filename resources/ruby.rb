@@ -19,7 +19,7 @@ action :install do
   rvm.ruby_set_default(version) if default
 end
 
-[:remove, :uninstall, :reinstall].each do |action_name|
+%i[remove uninstall reinstall].each do |action_name|
   action action_name do
     if rvm.ruby?(version)
       Chef::Log.debug "#{action_name.to_s.capitalize} ruby #{version} for user #{user}"

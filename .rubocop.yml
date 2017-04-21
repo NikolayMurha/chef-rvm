@@ -38,3 +38,5 @@ Metrics/AbcSize:
   Max: 30
 Metrics/CyclomaticComplexity:
   Max: 30
+Style/FileName:
+  Enabled: false

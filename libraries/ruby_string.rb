@@ -5,7 +5,7 @@ class ChefRvmCookbook
       attr_accessor :gemset
       attr_accessor :ruby_string
 
-      RUBY_VERSIONS = [%w(system)].freeze
+      RUBY_VERSIONS = [%w[system]].freeze
 
       def initialize(ruby_string = nil)
         self.ruby_string = ruby_string if ruby_string

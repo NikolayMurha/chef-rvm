@@ -6,7 +6,7 @@ class ChefRvmCookbook
         !rvm(ruby_string.to_s).error?
       end
 
-      [:create, :prune, :pristine].each do |action|
+      %i[create prune pristine].each do |action|
         define_method "gemset_#{action}" do |*args|
           ruby_string = _gemset_ruby_string(*args)
           check_ruby!(ruby_string)

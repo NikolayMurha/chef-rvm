@@ -9,11 +9,11 @@ directory '/home/ubuntu/test' do
 end
 
 file '/home/ubuntu/test/Gemfile' do
-  content <<EOF
-source 'https://rubygems.org'
+  content <<~EOF
+    source 'https://rubygems.org'
 
-gem 'nio4r', '~> 1.2.1'
-gem 'eye'
+    gem 'nio4r', '~> 1.2.1'
+    gem 'eye'
 EOF
 end
 
