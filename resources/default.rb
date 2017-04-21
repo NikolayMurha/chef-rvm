@@ -17,7 +17,7 @@ action :install do
     updated_by_last_action(true)
   end
 
-  rubies = self.rubies
+  rubies = rubies
   if rubies
     rubies = Array(rubies) if rubies.is_a?(String)
     rubies.each do |ruby_string, options|
@@ -80,4 +80,3 @@ action_class.class_eval do
     end
   end
 end
-

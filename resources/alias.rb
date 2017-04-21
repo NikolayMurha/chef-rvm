@@ -27,4 +27,3 @@ end
 action_class.class_eval do
   include ChefRvmCookbook::RvmResourceHelper
 end
-

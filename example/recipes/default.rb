@@ -1,6 +1,6 @@
 include_recipe 'build-essential::default'
 include_recipe 'apt'
-include_recipe "java"
+include_recipe 'java'
 include_recipe 'chef_rvm'
 include_recipe 'chef_rvm_example::user'
 

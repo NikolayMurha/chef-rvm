@@ -11,22 +11,22 @@ action :install do
     rvm.gemset_create(ruby_string)
   end
 
-  if rvm.gem?(ruby_string, self.gem, version)
-    Chef::Log.debug("Gem #{self.gem} #{version} already installed on gemset #{ruby_string} for user #{user}.")
+  if rvm.gem?(ruby_string, gem, version)
+    Chef::Log.debug("Gem #{gem} #{version} already installed on gemset #{ruby_string} for user #{user}.")
   else
-    Chef::Log.debug("Install gem #{self.gem} #{version} on gemset #{ruby_string} for user #{user}.")
-    rvm.gem_install(ruby_string, self.gem, version)
+    Chef::Log.debug("Install gem #{gem} #{version} on gemset #{ruby_string} for user #{user}.")
+    rvm.gem_install(ruby_string, gem, version)
     updated_by_last_action(true)
   end
 end
 
 [:update, :uninstall].each do |action_name|
   action action_name do
-    if rvm.gem?(ruby_string, self.gem, version)
-      Chef::Log.debug "#{action_name.to_s.capitalize} gem #{self.gem} #{version} from gemset #{ruby_string} for user #{user}."
+    if rvm.gem?(ruby_string, gem, version)
+      Chef::Log.debug "#{action_name.to_s.capitalize} gem #{gem} #{version} from gemset #{ruby_string} for user #{user}."
       updated_by_last_action(true)
     else
-      Chef::Log.debug "Gem #{self.gem} #{version} is not installed on gemset #{ruby_string} for user #{user}."
+      Chef::Log.debug "Gem #{gem} #{version} is not installed on gemset #{ruby_string} for user #{user}."
     end
   end
 end

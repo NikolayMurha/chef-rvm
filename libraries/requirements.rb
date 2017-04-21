@@ -26,8 +26,8 @@ class ChefRvmCookbook
                return [] if Cache.get('opal')
                Cache.set('opal', 1)
                opal_requirements
-            else
-              return [] if Cache.get('ruby')
+             else
+               return [] if Cache.get('ruby')
                Cache.set('ruby', 1)
                ruby_requirements(ruby_string)
              end
@@ -96,12 +96,14 @@ class ChefRvmCookbook
         'default' => []
       )
 
-      pkgs += value_for_platform(
-        %w(debian ubuntu) => %w(subversion),
-        %w(suse centos redhat fedora scientific amazon) => %w(git subversion autoconf),
-        'gentoo' => %w(libiconv readline zlib openssl libyaml sqlite libxslt libtool gcc autoconf automake bison m4),
-        'default' => []
-      ) if ruby_string.version =~ /head$/
+      if ruby_string.version =~ /head$/
+        pkgs += value_for_platform(
+          %w(debian ubuntu) => %w(subversion),
+          %w(suse centos redhat fedora scientific amazon) => %w(git subversion autoconf),
+          'gentoo' => %w(libiconv readline zlib openssl libyaml sqlite libxslt libtool gcc autoconf automake bison m4),
+          'default' => []
+        )
+      end
       pkgs
     end
   end
