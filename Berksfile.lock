@@ -17,7 +17,7 @@ GRAPH
     mingw (>= 1.1)
     seven_zip (>= 0.0.0)
   chef_gem (0.1.0)
-  chef_rvm (1.1.1)
+  chef_rvm (2.0.0)
     apt (>= 0.0.0)
     build-essential (>= 0.0.0)
     chef_gem (>= 0.0.0)

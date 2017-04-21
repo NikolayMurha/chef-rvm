@@ -1,5 +1,3 @@
-puts '******* LOAD CUSTOM RESOURCE *******'
-
 def rvmrc_properties
   node['chef_rvm']['rvmrc'].merge(rvmrc || {})
 end
@@ -11,13 +9,11 @@ property :rubies, [Hash, Array, String], default: {}
 property :rvmrc, [Hash, NilClass], default: nil
 
 action :install do
-  puts '>>>>>>>>>>>>>>>>>>>>>>>>>> install'
   unless rvm.rvm?
     rvm.rvm_install
     updated_by_last_action(true)
   end
-
-  rubies = rubies
+  rubies = new_resource.rubies
   if rubies
     rubies = Array(rubies) if rubies.is_a?(String)
     rubies.each do |ruby_string, options|
