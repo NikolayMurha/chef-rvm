@@ -6,7 +6,7 @@ description 'Installs/Configures rvm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 # source_url 'https://github.com/MurgaNikolay/chef-rvm'
 # issues_url 'https://github.com/MurgaNikolay/chef-rvm/issues'
-version '1.1.1'
+version '1.1.0'
 
 recipe 'chef_rvm', 'Installs all'
 recipe 'chef_rvm::rvm', 'Installs the rvm for users'
@@ -23,6 +23,7 @@ depends 'sudo'
 depends 'apt'
 depends 'build-essential'
 depends 'chef_gem'
+depends 'gpg'
 depends 'curl'
 
 # if using jruby, java is required on system

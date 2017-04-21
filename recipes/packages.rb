@@ -1,3 +1,4 @@
+include_recipe 'gpg'
 include_recipe 'apt'
 include_recipe 'build-essential'
 include_recipe 'curl'
