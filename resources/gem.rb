@@ -1,7 +1,36 @@
-actions :install, :uninstall, :update
 default_action :install
 
-attribute :gem, kind_of: [String]
-attribute :version, kind_of: [String, NilClass], default: nil
-attribute :user, kind_of: [String], default: 'root'
-attribute :ruby_string, kind_of: [String], required: true
+property :gem, [String]
+property :version, [String, NilClass], default: nil
+property :user, [String], default: 'root'
+property :ruby_string, [String], required: true
+
+action :install do
+  unless rvm.gemset?(ruby_string)
+    Chef::Log.debug('Create gemset before installing gem')
+    rvm.gemset_create(ruby_string)
+  end
+
+  if rvm.gem?(ruby_string, self.gem, version)
+    Chef::Log.debug("Gem #{self.gem} #{version} already installed on gemset #{ruby_string} for user #{user}.")
+  else
+    Chef::Log.debug("Install gem #{self.gem} #{version} on gemset #{ruby_string} for user #{user}.")
+    rvm.gem_install(ruby_string, self.gem, version)
+    updated_by_last_action(true)
+  end
+end
+
+[:update, :uninstall].each do |action_name|
+  action action_name do
+    if rvm.gem?(ruby_string, self.gem, version)
+      Chef::Log.debug "#{action_name.to_s.capitalize} gem #{self.gem} #{version} from gemset #{ruby_string} for user #{user}."
+      updated_by_last_action(true)
+    else
+      Chef::Log.debug "Gem #{self.gem} #{version} is not installed on gemset #{ruby_string} for user #{user}."
+    end
+  end
+end
+
+action_class.class_eval do
+  include ChefRvmCookbook::RvmResourceHelper
+end

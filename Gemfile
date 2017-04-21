@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 source 'https://rubygems.org'
-gem 'chef'
+gem 'chef', '~> 13.0'
 gem 'rake', '< 11.0'
 gem 'stove'
 group :test do

@@ -1,5 +1,6 @@
 include_recipe 'build-essential::default'
 include_recipe 'apt'
+include_recipe "java"
 include_recipe 'chef_rvm'
 include_recipe 'chef_rvm_example::user'
 
@@ -24,6 +25,11 @@ end
 chef_rvm_ruby 'ubuntu:1.9.3' do
   user 'ubuntu'
   version '1.9.3'
+end
+
+chef_rvm_ruby 'jruby' do
+  user 'ubuntu'
+  version '9.1.7.0'
 end
 
 chef_rvm_ruby 'ubuntu:2.0.0' do

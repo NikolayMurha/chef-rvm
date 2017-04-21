@@ -19,13 +19,15 @@ class ChefRvmCookbook
     def requirements_install(ruby_string)
       ruby_string = RubyString[ruby_string]
       pkgs = if ruby_string.version.to_s =~ /^jruby/
-               return if Cache.get('jruby')
+               return [] if Cache.get('jruby')
                Cache.set('jruby', 1)
                jruby_requirements
              elsif ruby_string.version.to_s =~ /^opal/
+               return [] if Cache.get('opal')
                Cache.set('opal', 1)
                opal_requirements
-             else
+            else
+              return [] if Cache.get('ruby')
                Cache.set('ruby', 1)
                ruby_requirements(ruby_string)
              end
@@ -40,7 +42,7 @@ class ChefRvmCookbook
 
     def jruby_requirements
       begin
-        resource_collection.find('bash[update-java-alternatives]').run_action(:run)
+        resources('bash[update-java-alternatives]').run_action(:run)
       rescue Chef::Exceptions::ResourceNotFound
         Chef::Log.debug('Java cookbook not loaded or not on ubuntu/debian, so skipping')
       end

@@ -30,6 +30,7 @@ recommends 'java' # For jruby
 recommends 'maven' # For jruby
 recommends 'nodejs' # for opal
 recommends 'mono' # for ironruby
+recommends 'homebrew' # for jruby
 
 # for installing on OSX, this is required for installation and compilation
-suggests 'homebrew'
+# suggests 'homebrew'
