@@ -44,7 +44,7 @@ class ChefRvmCookbook
         begin
           parent_shell_out("curl -sSL https://get.rvm.io > #{temp_file.path}").error!
           parent_shell_out("chmod 0777 #{temp_file.path}").error!
-          parent_shell_out("bash #{temp_file.path} stable --auto-dotfiles", shell_options).error!
+          parent_shell_out("bash #{temp_file.path} stable --auto-dotfiles --path '#{rvm_path}'", shell_options).error!
           rvm('autolibs read-fail')
         ensure
           temp_file.close
