@@ -20,7 +20,7 @@ action :install do
   end
 end
 
-[:update, :uninstall].each do |action_name|
+%i[update uninstall].each do |action_name|
   action action_name do
     if rvm.gem?(ruby_string, gem, version)
       Chef::Log.debug "#{action_name.to_s.capitalize} gem #{gem} #{version} from gemset #{ruby_string} for user #{user}."
