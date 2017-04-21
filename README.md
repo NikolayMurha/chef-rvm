@@ -8,9 +8,9 @@
 #### Inspired by [RVM](https://github.com/martinisoft/chef-rvm/) cookbook
 ### Supported chef-client version:
 
-Chef-Client >= 11.12.0
+Chef-Client >= 12.5
 
-# LWRP's
+# Custom resources
 
 ### chef_rvm 
 ```ruby
