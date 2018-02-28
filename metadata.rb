@@ -4,7 +4,7 @@ maintainer_email 'work at murga.kiev.ua'
 license 'Apache v2.0'
 description 'Installs/Configures rvm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '2.0.0'
+version '2.0.1'
 
 recipe 'chef_rvm', 'Installs all'
 recipe 'chef_rvm::rvm', 'Installs the rvm for users'
