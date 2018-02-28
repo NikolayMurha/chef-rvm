@@ -14,7 +14,7 @@ action :create do
   end
 end
 
-%w[delete update pristine prune].each do |action_name|
+%w(delete update pristine prune).each do |action_name|
   action action_name.to_sym do
     if rvm.gemset?(ruby_string)
       Chef::Log.info("#{action_name.capitalize} gemset #{ruby_string} for user #{user}.")

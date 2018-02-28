@@ -45,7 +45,7 @@ class ChefRvmCookbook
     def shell_options
       opts = {
         user: user,
-        environment: env
+        environment: env,
       }
       if options[:verbose]
         opts[:log_level] = :debug

@@ -7,12 +7,16 @@ class ChefRvmCookbook
         !rvm(ruby_string.version).error?
       end
 
-      def ruby_install(ruby_string = nil, patch = nil)
+      def ruby_install(ruby_string = nil, patch = nil, rb_binary = '')
         check_rvm!
         ruby_string = ruby_string(ruby_string)
-        cmd = "install #{ruby_string.version}"
-        cmd << " --patch #{patch}"
-        rvm!(:install, ruby_string.version, timeout: 1000)
+        if rb_binary.empty?
+          cmd = "install #{ruby_string.version}"
+          cmd << " --patch #{patch}"
+        else
+          cmd = "mount -r #{rb_binary}"
+        end
+        rvm!(cmd, timeout: 1000)
       end
 
       def ruby_set_default(ruby_string = nil)

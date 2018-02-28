@@ -5,7 +5,7 @@ node['chef_rvm']['users'].each do |username, rvm|
     scopes.each do |scope, binaries|
       Array(binaries).each do |binary|
         resource_config = {
-          'binary' => binary
+          'binary' => binary,
         }
         resource_config = binary if binary.is_a?(Hash)
         chef_rvm_wrapper "rvm:wrapper:#{username}:#{scope}:#{resource_config['binary']}" do

@@ -4,7 +4,7 @@ class ChefRvmCookbook
       set_or_return(
         :ruby_string,
         arg,
-        :kind_of => [String]
+        kind_of: [String]
       )
     end
   end
