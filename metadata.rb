@@ -4,8 +4,6 @@ maintainer_email 'work at murga.kiev.ua'
 license 'Apache v2.0'
 description 'Installs/Configures rvm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-# source_url 'https://github.com/MurgaNikolay/chef-rvm'
-# issues_url 'https://github.com/MurgaNikolay/chef-rvm/issues'
 version '2.0.0'
 
 recipe 'chef_rvm', 'Installs all'
@@ -24,13 +22,5 @@ depends 'apt'
 depends 'build-essential'
 depends 'chef_gem'
 depends 'curl'
-
-# if using jruby, java is required on system
-recommends 'java' # For jruby
-recommends 'maven' # For jruby
-recommends 'nodejs' # for opal
-recommends 'mono' # for ironruby
-recommends 'homebrew' # for jruby
-
-# for installing on OSX, this is required for installation and compilation
-# suggests 'homebrew'
+depends 'aws', '~> 7.2.2'
+depends 'ark', '~> 3.1.0'

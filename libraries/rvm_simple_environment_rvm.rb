@@ -1,6 +1,8 @@
 require 'tempfile'
 class ChefRvmCookbook
   class RvmSimpleEnvironment
+    attr_accessor :rvm_binary
+    attr_accessor :ruby_binary
     module Rvm
       def rvm(*args)
         args.unshift :rvm
@@ -36,17 +38,22 @@ class ChefRvmCookbook
         cmd
       end
 
-      def rvm_install
-        temp_file = Tempfile.new('foo')
-        begin
-          parent_shell_out("curl -sSL https://get.rvm.io > #{temp_file.path}").error!
-          parent_shell_out("chmod 0777 #{temp_file.path}").error!
-          parent_shell_out("bash #{temp_file.path} stable --auto-dotfiles --path '#{rvm_path}'", shell_options).error!
-          rvm('autolibs read-fail')
-        ensure
-          temp_file.close
-          temp_file.unlink
+      def rvm_install(rvm_binary)
+        if rvm_binary.empty?
+          begin
+            temp_file = Tempfile.new()
+            parent_shell_out("curl -sSL https://get.rvm.io > #{temp_file.path}").error!
+            parent_shell_out("chmod 0777 #{temp_file.path}").error!
+            parent_shell_out("bash #{temp_file.path} stable --auto-dotfiles --path '#{rvm_path}'", shell_options).error!
+          ensure
+            temp_file.close
+            temp_file.unlink
+          end
+        else
+          parent_shell_out("cd #{rvm_binary} && ./install --auto-dotfiles --path '#{rvm_path}'").error!
+          parent_shell_out("chown -R #{user}: #{rvm_path}").error!
         end
+        rvm('autolibs read-fail')
       end
 
       def rvm_implode

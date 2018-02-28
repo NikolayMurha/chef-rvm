@@ -5,22 +5,22 @@ property :alias_name, String
 property :ruby_string, String
 
 action :create do
-  if rvm.alias?(alias_name)
-    Chef::Log.debug("Alias #{alias_name} for user #{user} already exists.")
+  if rvm.alias?(new_resource.alias_name)
+    Chef::Log.debug("Alias #{new_resource.alias_name} for user #{new_resource.user} already exists.")
   else
-    Chef::Log.debug("Create alias #{alias_name} -> #{ruby_string} for user #{user}")
-    rvm.alias_create(alias_name, ruby_string)
+    Chef::Log.debug("Create alias #{new_resource.alias_name} -> #{new_resource.ruby_string} for user #{new_resource.user}")
+    rvm.alias_create(new_resource.alias_name, new_resource.ruby_string)
     updated_by_last_action(true)
   end
 end
 
-action :deletxe do
-  if rvm.alias?(alias_name)
-    Chef::Log.debug("Delete alias #{alias_name} -> #{ruby_string} for user #{user}.")
-    rvm.alias_delete(alias_name)
+action :delete do
+  if rvm.alias?(new_resource.alias_name)
+    Chef::Log.debug("Delete alias #{new_resource.alias_name} -> #{new_resource.ruby_string} for user #{new_resource.user}.")
+    rvm.alias_delete(new_resource.alias_name)
     updated_by_last_action(true)
   else
-    Chef::Log.debug("Alias #{alias_name} for user #{user} is not exist.")
+    Chef::Log.debug("Alias #{new_resource.alias_name} for user #{new_resource.user} is not exist.")
   end
 end
 
