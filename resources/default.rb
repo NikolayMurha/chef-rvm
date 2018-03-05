@@ -13,6 +13,7 @@ property :s3_region, String, default: ''
 property :rvm_binary, String, default: ''
 property :rvm_checksum, String, default: ''
 property :ruby_binary, String, default: ''
+property :ruby_checksum, String, default: ''
 
 action :install do
   unless rvm.rvm?
@@ -30,8 +31,6 @@ action :install do
         url "file://#{Chef::Config[:file_cache_path]}/#{new_resource.rvm_binary}"
         path Chef::Config[:file_cache_path]
         checksum new_resource.rvm_checksum
-        owner new_resource.user
-        group new_resource.user
         action :nothing
       end.run_action(:put)
       rvm.rvm_install("#{Chef::Config[:file_cache_path]}/rvm")
@@ -40,14 +39,6 @@ action :install do
   end
   rubies = new_resource.rubies
   if rubies
-    unless new_resource.ruby_binary.empty?
-      aws_s3_file "#{Chef::Config[:file_cache_path]}/#{new_resource.ruby_binary}" do
-        bucket new_resource.s3_bucket
-        remote_path "#{new_resource.s3_folder}/#{new_resource.ruby_binary}"
-        region new_resource.s3_region
-        action :nothing
-      end.run_action(:create)
-    end
     rubies = Array(rubies) if rubies.is_a?(String)
     rubies.each do |ruby_string, options|
       options ||= {}
@@ -56,7 +47,11 @@ action :install do
         version ruby_string
         patch options['patch']
         default options['default']
-        binary "#{Chef::Config[:file_cache_path]}/#{new_resource.ruby_binary}"
+        s3_bucket new_resource.s3_bucket
+        s3_folder new_resource.s3_folder
+        s3_region new_resource.s3_region
+        binary new_resource.ruby_binary
+        checksum new_resource.ruby_checksum
       end
     end
   end
