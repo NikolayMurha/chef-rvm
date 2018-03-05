@@ -44,22 +44,13 @@ class ChefRvmCookbook
             temp_file = Tempfile.new()
             parent_shell_out("curl -sSL https://get.rvm.io > #{temp_file.path}").error!
             parent_shell_out("chmod 0777 #{temp_file.path}").error!
-            if system?
-              parent_shell_out("sudo bash #{temp_file.path} stable --auto-dotfiles --path '#{rvm_path}'", shell_options).error!
-            else
-              parent_shell_out("su -c \"bash #{temp_file.path} stable --auto-dotfiles --path '#{rvm_path}'\" #{user}", shell_options).error!
-            end
+            parent_shell_out("sudo su -c \"bash #{temp_file.path} stable --auto-dotfiles --path '#{rvm_path}'\" #{user}", shell_options).error!
           ensure
             temp_file.close
             temp_file.unlink
           end
         else
-          if system?
-            parent_shell_out("sudo sh -c \"cd #{rvm_binary} && ./install --auto-dotfiles --path '#{rvm_path}'\"").error!
-          else
-            parent_shell_out("su -c \"cd #{rvm_binary} && ./install --auto-dotfiles --path '#{rvm_path}'\" #{user}").error!
-          end
-          parent_shell_out("chown -R #{user}: #{rvm_path}").error!
+          parent_shell_out("sudo su -c \"cd #{rvm_binary} && ./install --auto-dotfiles --path '#{rvm_path}'\" #{user}").error!
         end
         rvm('autolibs read-fail')
       end
