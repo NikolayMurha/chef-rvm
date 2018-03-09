@@ -1,2 +1,0 @@
-Chef Rvm Example cookbook
-=========================

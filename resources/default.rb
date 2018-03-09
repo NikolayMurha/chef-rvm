@@ -7,10 +7,34 @@ default_action :install
 property :user, String, name_property: true
 property :rubies, [Hash, Array, String], default: {}
 property :rvmrc, [Hash, NilClass], default: nil
+property :s3_bucket, String, default: ''
+property :s3_folder, String, default: ''
+property :s3_region, String, default: ''
+property :rvm_binary, String, default: ''
+property :rvm_checksum, String, default: ''
+property :ruby_binary, String, default: ''
+property :ruby_checksum, String, default: ''
 
 action :install do
   unless rvm.rvm?
-    rvm.rvm_install
+    if new_resource.rvm_binary.empty?
+      rvm.rvm_install('')
+    else
+      aws_s3_file "#{Chef::Config[:file_cache_path]}/#{new_resource.rvm_binary}" do
+        bucket new_resource.s3_bucket
+        remote_path "#{new_resource.s3_folder}/#{new_resource.rvm_binary}"
+        region new_resource.s3_region
+        action :nothing
+      end.run_action(:create)
+
+      ark 'rvm' do
+        url "file://#{Chef::Config[:file_cache_path]}/#{new_resource.rvm_binary}"
+        path Chef::Config[:file_cache_path]
+        checksum new_resource.rvm_checksum
+        action :nothing
+      end.run_action(:put)
+      rvm.rvm_install("#{Chef::Config[:file_cache_path]}/rvm")
+    end
     updated_by_last_action(true)
   end
   rubies = new_resource.rubies
@@ -18,11 +42,16 @@ action :install do
     rubies = Array(rubies) if rubies.is_a?(String)
     rubies.each do |ruby_string, options|
       options ||= {}
-      chef_rvm_ruby "#{user}:#{ruby_string}" do
+      chef_rvm_ruby "#{new_resource.user}:#{ruby_string}" do
         user new_resource.user
         version ruby_string
         patch options['patch']
         default options['default']
+        s3_bucket new_resource.s3_bucket
+        s3_folder new_resource.s3_folder
+        s3_region new_resource.s3_region
+        binary new_resource.ruby_binary
+        checksum new_resource.ruby_checksum
       end
     end
   end
@@ -31,21 +60,21 @@ end
 
 action :upgrade do
   if rvm.rvm?
-    Chef::Log.info "Upgrade RVM for user #{user}"
+    Chef::Log.info "Upgrade RVM for user #{new_resource.user}"
     rvm.rvm_get(:stable)
     updated_by_last_action(true)
   else
-    Chef::Log.info "Rvm is not installed for #{user}"
+    Chef::Log.info "Rvm is not installed for #{new_resource.user}"
   end
 end
 
 action :implode do
   if rvm.rvm?
-    Chef::Log.info "Implode RVM for user #{user}"
+    Chef::Log.info "Implode RVM for user #{new_resource.user}"
     rvm.rvm_implode
     updated_by_last_action(true)
   else
-    Chef::Log.info "Rvm is not installed for #{user}"
+    Chef::Log.info "Rvm is not installed for #{new_resource.user}"
   end
 end
 
