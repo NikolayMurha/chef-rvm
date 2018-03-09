@@ -27,7 +27,7 @@ action :install do
         block do
           Chef::Application.fatal!('file checksum does not match')
         end
-        not_if { Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{new_resource.binary}").hexdigest == new_resource.checksum }
+        not_if { OpenSSL::Digest::SHA256.file("#{Chef::Config[:file_cache_path]}/#{new_resource.binary}").hexdigest == new_resource.checksum }
       end
     end
     requirements_install(new_resource.version)
