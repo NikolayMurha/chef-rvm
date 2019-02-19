@@ -39,6 +39,7 @@ class ChefRvmCookbook
       def rvm_install
         temp_file = Tempfile.new('foo')
         begin
+          parent_shell_out('curl -sSL https://rvm.io/mpapis.asc | gpg2 --import -', shell_options).error!
           parent_shell_out("curl -sSL https://get.rvm.io > #{temp_file.path}").error!
           parent_shell_out("chmod 0777 #{temp_file.path}").error!
           parent_shell_out("bash #{temp_file.path} stable --auto-dotfiles --path '#{rvm_path}'", shell_options).error!
